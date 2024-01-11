@@ -1,0 +1,18 @@
+version: '3.2'
+services:
+  nagios:
+    image: tronyx/nagios
+    ports:
+      - 80:80/tcp
+    volumes:
+    #  /path-to-nagios/etc/:/opt/nagios/etc/
+    #  /path-to-nagios/var:/opt/nagios/var/
+    #  /path-to-custom-plugins:/opt/Custom-Nagios-Plugins
+    #  /path-to-nagiosgraph-var:/opt/nagiosgraph/var
+    #  /path-to-nagiosgraph-etc:/opt/nagiosgraph/etc
+      - /home/swarm-data/nagios/etc:/opt/nagios/etc/
+      - /home/swarm-data/nagios/var:/opt/nagios/var/
+
+# volumes:
+#  nagios-etc:
+#  nagios-var:

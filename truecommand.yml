@@ -1,0 +1,27 @@
+version: '3.4'
+
+services:
+    truecommand:
+        image: ixsystems/truecommand:latest
+        deploy:
+          mode: replicated
+          replicas: 1
+          placement:
+            preferences:
+              - spread: node.labels.zone
+            constraints:
+              - node.role == worker
+        volumes:
+            - truecommand:/data'
+        ports:
+            - '8080:80'
+            - '8081:443'
+        restart: always
+#        environment:
+#            - TZ=Australia/Perth
+
+volumes:
+    truecommand:
+      driver: nfs
+      driver_opts:
+        share: "10.246.0.5:/mnt/swm-data/truecommand"
