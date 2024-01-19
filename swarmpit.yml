@@ -85,8 +85,11 @@ networks:
   net:
     driver: overlay
 
+# Modificado para guardar los datos en otro directorio
 volumes:
   db-data:
     driver: local
+    device: /swarm-data/swarmpit/db-data
   influx-data:
     driver: local
+    device: /swarm-data/swarmpit/influx-data

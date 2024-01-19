@@ -1,3 +1,5 @@
+# https://nginxproxymanager.com/setup/
+# https://github.com/NginxProxyManager/nginx-proxy-manager
 version: '3.7'
 # Credenciales por defecto
 # Email: admin@example.com
