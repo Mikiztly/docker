@@ -1,4 +1,5 @@
 # https://github.com/swarmpit/swarmpit
+# docker stack deploy --compose-file=swarmpit.yml swarmpit
 version: '3.3'
 
 services:

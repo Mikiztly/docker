@@ -10,9 +10,40 @@ services:
     #  /path-to-custom-plugins:/opt/Custom-Nagios-Plugins
     #  /path-to-nagiosgraph-var:/opt/nagiosgraph/var
     #  /path-to-nagiosgraph-etc:/opt/nagiosgraph/etc
-      - /home/swarm-data/nagios/etc:/opt/nagios/etc/
-      - /home/swarm-data/nagios/var:/opt/nagios/var/
+      - nagios-etc:/opt/nagios/etc/
+      - nagios-var:/opt/nagios/var/
+      - nagios-custom-plugins:/opt/Custom-Nagios-Plugins
+      - nagiosgraph-etc:/opt/nagiosgraph/etc
+      - nagiosgraph-var:/opt/nagiosgraph/var
 
 # volumes:
-#  nagios-etc:
-#  nagios-var:
+  nagios-etc:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: /home/swarm-data/nagios/etc
+  nagios-var:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: /home/swarm-data/nagios/var
+  nagios-custom-plugins:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: /home/swarm-data/nagios/custom-plugins
+  nagiosgraph-etc:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: /home/swarm-data/nagiosgraph/etc
+  nagiosgraph-var:
+    driver: local
+    driver_opts:
+       o: bind
+       type: none
+       device: /home/swarm-data/nagiosgraph/var
