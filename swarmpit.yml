@@ -34,7 +34,10 @@ services:
   db:
     image: couchdb:2.3.0
     volumes:
+      # Normalmente el directorio se crea en la maquina que corre
       - db-data:/opt/couchdb/data
+      # Con un directorio compartido con GlusterFS
+      - /home/swarm-data/swarmpit/db-data:/opt/couchdb/data
     networks:
       - net
     deploy:
@@ -49,7 +52,10 @@ services:
   influxdb:
     image: influxdb:1.8
     volumes:
+      # Normalmente el directorio se crea en la maquina que corre
       - influx-data:/var/lib/influxdb
+      # Con un directorio compartido con GlusterFS
+      - /home/swarm-data/swarmpit/influx-data:/var/lib/influxdb
     networks:
       - net
     deploy:
@@ -85,11 +91,10 @@ networks:
   net:
     driver: overlay
 
-# Modificado para guardar los datos en otro directorio
+# Si no se comparte la informacion y queda en el directorio local
 volumes:
   db-data:
     driver: local
-    device: /swarm-data/swarmpit/db-data
   influx-data:
     driver: local
-    device: /swarm-data/swarmpit/influx-data
+# Si es un directorio compartido con GlusterFS no va esta configuracion
