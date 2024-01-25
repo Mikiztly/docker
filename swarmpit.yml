@@ -27,6 +27,8 @@ services:
         reservations:
           cpus: '0.25'
           memory: 512M
+      mode: replicated
+      replicas: 1
       placement:
         constraints:
           - node.role == manager
@@ -35,7 +37,7 @@ services:
     image: couchdb:2.3.0
     volumes:
       # Normalmente el directorio se crea en la maquina que corre
-      - db-data:/opt/couchdb/data
+      # - db-data:/opt/couchdb/data
       # Con un directorio compartido con GlusterFS
       - /home/swarm-data/swarmpit/db-data:/opt/couchdb/data
     networks:
@@ -53,7 +55,7 @@ services:
     image: influxdb:1.8
     volumes:
       # Normalmente el directorio se crea en la maquina que corre
-      - influx-data:/var/lib/influxdb
+      # - influx-data:/var/lib/influxdb
       # Con un directorio compartido con GlusterFS
       - /home/swarm-data/swarmpit/influx-data:/var/lib/influxdb
     networks:
@@ -92,9 +94,9 @@ networks:
     driver: overlay
 
 # Si no se comparte la informacion y queda en el directorio local
-volumes:
-  db-data:
-    driver: local
-  influx-data:
-    driver: local
+# volumes:
+#  db-data:
+#    driver: local
+#  influx-data:
+#    driver: local
 # Si es un directorio compartido con GlusterFS no va esta configuracion

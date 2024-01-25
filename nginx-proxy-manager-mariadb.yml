@@ -1,10 +1,10 @@
 # https://nginxproxymanager.com/setup/
 # https://github.com/NginxProxyManager/nginx-proxy-manager
-version: '3.7'
 # Credenciales por defecto
 # Email: admin@example.com
 # Password: changeme
 
+version: '3.8'
 services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
@@ -24,43 +24,38 @@ services:
       DB_MYSQL_PASSWORD: "npm"
       DB_MYSQL_NAME: "npm"
       # Uncomment this if IPv6 is not enabled on your host
-      # DISABLE_IPV6: 'true'
+      DISABLE_IPV6: 'true'
     volumes:
-#      - ./data:/data
-#      - ./letsencrypt:/etc/letsencrypt
-      - npm_data:/data
-      - npm_le:/etc/letsencrypt
+      # Cambio la ubicacion de los directorios
+      - /home/swarm-data/npm/data:/data
+      - /home/swarm-data/npm/le:/etc/letsencrypt
     depends_on:
       - db
+    # Como estoy trabajando con docker swarm le fuerzo que se haga el contenedor en un nodo worker
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == worker]
 
   db:
-#    image: 'jc21/mariadb-aria:latest'
-    image: mariadb:latest
+    image: 'jc21/mariadb-aria:latest'
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: 'npm'
       MYSQL_DATABASE: 'npm'
       MYSQL_USER: 'npm'
       MYSQL_PASSWORD: 'npm'
+      MARIADB_AUTO_UPGRADE: '1'
     volumes:
-#      - ./mysql:/var/lib/mysql
-      - npm_db:/var/lib/mysql
-volumes:
-  npm_data:
-    driver: local
-    driver_opts:
-       o: bind
-       type: none
-       device: /swarm-data/npm/data
-  npm_le:
-    driver: local
-    driver_opts:
-       o: bind
-       type: none
-       device: /swarm-data/npm/le
-  npm_db:
-    driver: local
-    driver_opts:
-       o: bind
-       type: none
-       device: /swarm-data/npm/db
+      # Cambio la ubicacion de los directorios
+      - /home/swarm-data/npm/db:/var/lib/mysql
+    # Como estoy trabajando con docker swarm le fuerzo que se haga el contenedor en un nodo worker
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints: [node.role == worker]
+networks:
+  default:
+    driver: overlay

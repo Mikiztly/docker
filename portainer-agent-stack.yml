@@ -27,7 +27,7 @@ services:
       # Normalmente el directorio se crea en la maquina que corre
       - portainer_data:/data
       # Con un directorio compartido con GlusterFS
-      - /swarm-data/portainer:/data
+      - /home/swarm-data/portainer:/data
     networks:
       - agent_network
     deploy:

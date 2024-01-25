@@ -9,5 +9,9 @@ Para manejar hasta 3 nodos con la version Community Edition o si te registras co
 
 swarmpit.yml:
 https://github.com/swarmpit/swarmpit
-
 Es el que estoy probando actualmente, parece muy util y lo mejor es que es totalmente open source y no tiene version de pago.
+
+nginx-proxy-manager.yml
+https://nginxproxymanager.com/setup/
+Es para manejar dominios, sub-dominios y certificados ssl
+
