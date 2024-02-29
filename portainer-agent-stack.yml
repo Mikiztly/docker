@@ -1,5 +1,6 @@
 # https://docs.portainer.io/start/install-ce/server/swarm/linux
 # docker stack deploy --compose-file=portainer.yml portainer
+# https://docker-ip:9443/
 
 version: '3.2'
 
@@ -17,7 +18,7 @@ services:
         constraints: [node.platform.os == linux]
 
   portainer:
-    image: portainer/portainer-ee:latest
+    image: portainer/portainer-ce:latest
     command: -H tcp://tasks.agent:9001 --tlsskipverify
     ports:
       - "9443:9443"
@@ -26,8 +27,8 @@ services:
     volumes:
       # Normalmente el directorio se crea en la maquina que corre
       - portainer_data:/data
-      # Con un directorio compartido con GlusterFS
-      - /home/swarm-data/portainer:/data
+      # Para un directorio compartido
+      # - [compartido]]:/data
     networks:
       - agent_network
     deploy:
@@ -43,4 +44,4 @@ networks:
 # Si no se comparte la informacion y queda en el directorio local
 volumes:
   portainer_data:
-# Si es un directorio compartido con GlusterFS no va esta configuracion
+# Si es un directorio compartido no va esta configuracion
