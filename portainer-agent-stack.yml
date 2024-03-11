@@ -28,7 +28,7 @@ services:
       # Normalmente el directorio se crea en la maquina que corre
       - portainer_data:/data
       # Para un directorio compartido
-      # - [compartido]]:/data
+      # - [compartido]:/data
     networks:
       - agent_network
     deploy:
