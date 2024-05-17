@@ -1,0 +1,73 @@
+# https://github.com/candidornotar/nextcloud
+version: "3.8"
+
+networks:
+  staticnet:
+    name: lan_cloud
+    ipam:
+      driver: default
+        config:
+          - subnet: 172.100.0.0/29
+
+services:
+  nextcloud:
+    networks:
+      staticnet:
+        ipv4_address: 172.100.0.2
+    image: nextcloud
+    container_name: nextcloud
+    ports:
+      - "8080:80"
+    restart: always
+    volumes:
+      - ./nextcloud/data:/var/www/html
+
+  mysql:
+    networks:
+      staticnet:
+        ipv4_address: 172.100.0.3
+    image: mysql
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=tu root pass
+      - MYSQL_PASSWORD=tu pass
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    ports:
+      - "3306:3306"
+    restart: always
+    volumes:
+      - ./mysql:/var/lib/mysql
+
+  onlyoffice:
+    networks:
+      staticnet:
+        ipv4_address: 172.100.0.4
+    image: onlyoffice/documentserver:latest
+    container_name: onlyoffice
+    environment:
+      JWT_SECRET: tu jwt pass
+    ports:
+      - "8081:80"
+    restart: always
+    volumes:
+      - ./onlyoffice/DocumentServer/logs:/var/log/onlyoffice
+      - ./onlyoffice/DocumentServer/data:/var/www/onlyoffice/Data
+      - ./onlyoffice/DocumentServer/lib:/var/lib/onlyoffice
+      - ./onlyoffice/DocumentServer/db:/var/lib/postgresql
+
+  nginx-proxy-manager:
+    networks:
+      staticnet:
+        ipv4_address: 172.100.0.5
+    image: 'jc21/nginx-proxy-manager'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+
+    volumes:
+      - ./nginx-proxy-manager/data:/data
+      - ./nginx-proxy-manager/letsencrypt:/etc/letsencrypt

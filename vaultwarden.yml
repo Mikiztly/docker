@@ -1,0 +1,66 @@
+# https://www.vaultwarden.net/
+# https://bitwarden.com/help/install-on-premise-linux/
+# https://github.com/candidornotar/vaultwarden
+
+version: "3.8"
+
+networks:
+    staticnet:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.18.0.0/29
+
+services:
+  vaultwarden:
+    networks:
+            staticnet:
+                      ipv4_address: 172.18.0.2
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    ports:
+      - "8080:80"
+    restart: always
+    environment:
+      - ADMIN_TOKEN=D6d!zjM%3PZhe2#8xQF6BBC6b5aUeQUmNgEpfpjihnsp@Tz@aL
+    volumes:
+      - ./vaultwarden/vw-data/:/data/
+
+  nginx-proxy-manager:
+    networks:
+            staticnet:
+                      ipv4_address: 172.18.0.3
+    image: 'jc21/nginx-proxy-manager'
+    container_name: nginx-proxy-manager
+    restart: unless-stopped
+    ports:
+      - '80:80'
+      - '81:81'
+      - '443:443'
+    environment:
+      # Mysql/Maria connection parameters:
+      DB_MYSQL_HOST: "db"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm"
+      DB_MYSQL_NAME: "npm"
+    volumes:
+      - ./vaultwarden/nginx-proxy-manager/data:/data
+      - ./vaultwarden/nginx-proxy-manager/letsencrypt:/etc/letsencrypt
+    depends_on:
+      - db
+
+  db:
+    networks:
+            staticnet:
+                      ipv4_address: 172.18.0.4
+    image: 'mariadb'
+    container_name: mariadb
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: 'npm'
+      MYSQL_DATABASE: 'npm'
+      MYSQL_USER: 'npm'
+      MYSQL_PASSWORD: 'npm'
+    volumes:
+      - ./vaultwarden/mysql:/var/lib/mysql
