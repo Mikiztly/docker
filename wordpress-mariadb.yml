@@ -1,0 +1,34 @@
+# https://medium.com/@m7adeel/docker-compose-setting-up-wordpress-fcb78701723a
+
+version: '3'
+
+services:
+  db:
+    image: mariadb:latest
+    command: '--default-authentication-plugin=mysql_native_password'
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=wordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+      - MYSQL_PASSWORD=wordpress
+    expose:
+      - 3306
+
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 18000:80
+    restart: always
+    depends_on:
+      - db
+    environment:
+      - WORDPRESS_DB_HOST=db
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
+
+volumes:
+  db_data:
