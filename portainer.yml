@@ -1,0 +1,41 @@
+# https://docs.portainer.io/start/install-ce/server/swarm/linux -> Comunity Edition
+# https://docs.portainer.io/start/install/server/swarm/linux -> Business Edition
+# https://cursosdedesarrollo.com/2022/01/nginx-proxy-manager-o-la-manera-sencilla-de-manejar-acceso-a-tus-servicios-docker/
+# docker stack deploy --compose-file=portainer-agent-stack.yml portainer
+# https://docker-ip:9443/
+
+version: '3.8'
+
+# Primero declaramos la red que vamos a utilizar
+networks:
+  staticnet:
+    name: lan_cloud
+    ipam:
+      driver: default
+        config:
+          - subnet: 192.168.100.0/24
+
+services:
+  portainer:
+    # Configuramos una IP estatica para el dock
+    nextcloud:
+      networks:
+        staticnet:
+          ipv4_address: 192.168.100.1
+    # Seguimos con la confiuracion del dock
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+      - "8000:8000"
+    # Configuracion de discos
+    volumes:
+      - ./volumes/portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always
+
+    # Configuracion de la red del dock
+    networks:
+      - npm
+      - portainer
