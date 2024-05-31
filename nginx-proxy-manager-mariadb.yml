@@ -1,14 +1,19 @@
+# COMPROBADO
 # https://nginxproxymanager.com/setup/
 # https://github.com/NginxProxyManager/nginx-proxy-manager
 # Credenciales por defecto
 # Email: admin@example.com
 # Password: changeme
+# TENER EN CUENTA: este archivo lo configure despues de usar portainer para manejar los dock
+# El monbre de la red que me creo fue [usuario]_[nombre_red], por lo que hay que ver el
+# nombre de la red primero y despues configurar bien, por ultimo se debe poner que es externa
 
 version: '3.8'
 services:
-  app:
+  # nginx-proxy-manager
+  npm:
     image: 'jc21/nginx-proxy-manager:latest'
-    restart: unless-stopped
+    restart: always
     ports:
       # These ports are in format <host-port>:<container-port>
       - '80:80' # Public HTTP Port
@@ -17,28 +22,46 @@ services:
       # Add any other Stream port you want to expose
       # - '21:21' # FTP
     environment:
-      # Mysql/Maria connection parameters:
-      DB_MYSQL_HOST: "db"
+      # Coneccion a la base de datos, dejo lo originales
+      # DB_MYSQL_HOST: "db"
+      # DB_MYSQL_PORT: 3306
+      # DB_MYSQL_USER: "npm"
+      # DB_MYSQL_PASSWORD: "npm"
+      # DB_MYSQL_NAME: "npm"
+      # Esta configuracion es para conectarse a una DB que se hizo en otro dock,
+      # se deben crear las credenciales en el servidor
+      DB_MYSQL_HOST: "mariadb"
       DB_MYSQL_PORT: 3306
       DB_MYSQL_USER: "npm"
       DB_MYSQL_PASSWORD: "npm"
       DB_MYSQL_NAME: "npm"
       # Uncomment this if IPv6 is not enabled on your host
       DISABLE_IPV6: 'true'
+    # Configuracion de discos
     volumes:
       - ./data:/data
       - ./letsencrypt:/etc/letsencrypt
     depends_on:
-      - db
-
-  db:
-    image: 'jc21/mariadb-aria:latest'
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: 'npm'
-      MYSQL_DATABASE: 'npm'
-      MYSQL_USER: 'npm'
-      MYSQL_PASSWORD: 'npm'
-      MARIADB_AUTO_UPGRADE: '1'
-    volumes:
-      - ./mysql:/var/lib/mysql
+      - mariadb
+    # Configuramos una IP estatica para el dock
+    networks:
+      dcasavilla_lan_cloud:
+        ipv4_address: 192.168.200.5
+    hostname: mariadb
+# Declaramos la red que vamos a utilizar, es una red ya creada en otro dock
+networks:
+  dcasavilla_lan_cloud:
+    external: true
+  
+  # Dejo la configuracion original
+  # db:
+    # image: 'jc21/mariadb-aria:latest'
+    # restart: unless-stopped
+    # environment:
+      # MYSQL_ROOT_PASSWORD: 'npm'
+      # MYSQL_DATABASE: 'npm'
+      # MYSQL_USER: 'npm'
+      # MYSQL_PASSWORD: 'npm'
+      # MARIADB_AUTO_UPGRADE: '1'
+    # volumes:
+      # - ./mysql:/var/lib/mysql

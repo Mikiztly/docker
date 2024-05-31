@@ -1,0 +1,54 @@
+# COMPROBADO
+# https://github.com/mytchallb/blog-local-mysql-phpmyadmin/blob/main/docker-compose.yml
+# TENER EN CUENTA: este archivo lo configure despues de usar portainer para manejar los dock
+# El monbre de la red que me creo fue [usuario]_[nombre_red], por lo que hay que ver el
+# nombre de la red primero y despues configurar bien, por ultimo se debe poner que es externa
+
+version: '3.8'
+services:
+  # Base de datos
+  mariadb:
+    image: mariadb:latest
+    # Configuramos el password de root y de un usuario para conectarse a la DB
+    environment:
+      MYSQL_ROOT_PASSWORD: CambiaMe
+#      MYSQL_DATABASE: example_database
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: CambiaAdmin
+    restart: always
+    # Configuracion de puertos
+    ports:
+      - '3306:3306'
+    # Configuracion de discos
+    volumes:
+      - ./mysql:/var/lib/mysql
+    # Configuramos una IP estatica para el dock
+    networks:
+      dcasavilla_lan_cloud:
+        ipv4_address: 192.168.200.3
+    hostname: mariadb
+
+  # phpmyadmin para manejar la DB
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    # Comfiguramos el nombre del servidor de BD, no configuro usuario y password por razones de seguridad
+    environment:
+      PMA_HOST: mariadb
+      # PMA_USER: admin
+      # PMA_PASSWORD: CambiaAdmin
+    # Configuracion de puertos
+    ports:
+      - '8100:80'
+    depends_on:
+      - mariadb
+    # Configuramos una IP estatica para el dock
+    networks:
+      dcasavilla_lan_cloud:
+        ipv4_address: 192.168.200.4
+    hostname: phpmyadmin
+
+# Declaramos la red que vamos a utilizar, es una red ya creada en otro dock
+networks:
+  dcasavilla_lan_cloud:
+    external: true

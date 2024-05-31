@@ -3,10 +3,14 @@ Archivos de configuración para Docker Compose:
 
 Utilidades para manejar docker con un solo servidor:
 
-portainer.yml
+**portainer.yml - COMPROBADO**
 Interfaz para manejar docker desde una web, muy completo y facil de utilizar, se configura red interna e IP estatica.
 
+**mariadb-phpmyadmin.yml - COMPROBADO**
+Un servidor de Base de Datos para utilizar solamente este para los demas servicios: nginx-proxy-manager, wordpress, etc. Configurado con IP estatica para conectarse con portainer.
 
+**nginx-proxy-manager-mariadb.yml  - COMPROBADO**
+Utilitario para manejar dominios, sub-dominios, certificados, etc.
 
 Utilidades para manejar via web docker swarm:
 

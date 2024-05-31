@@ -1,3 +1,4 @@
+# COMPROBADO
 # https://docs.portainer.io/start/install-ce/server/swarm/linux -> Comunity Edition
 # https://docs.portainer.io/start/install/server/swarm/linux -> Business Edition
 # https://cursosdedesarrollo.com/2022/01/nginx-proxy-manager-o-la-manera-sencilla-de-manejar-acceso-a-tus-servicios-docker/
@@ -10,6 +11,7 @@ services:
     # Confiuracion del dock
     container_name: portainer
     image: portainer/portainer-ce:latest
+    # Configuracion de puertos
     ports:
       - "9000:9000"
       - "9443:9443"
