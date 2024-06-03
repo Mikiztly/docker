@@ -1,0 +1,136 @@
+# COMPROBADO
+# Son cuatro servicios para manejar docker: portainer + mariadb + phpmyadmin + nginx-proxy-manager
+# En resumen es una mezcla de los tres contenedores que ya tengo funcionando con la
+# diferencia que configuro la red de forma manual, esto me da la ventaja de usar los
+# nombres de host en vez de IP y tambien puedo conectarme a los servidores desde otro
+# Docker. Por ejemplo voy a tener un solo servidor mariadb para todas los servicios
+
+version: '3.8'
+services:
+  # Creamos el dock de portainer con una red propia para que se utilice con npm
+  # https://docs.portainer.io/start/install-ce/server/swarm/linux -> Comunity Edition
+  # https://docs.portainer.io/start/install/server/swarm/linux -> Business Edition
+  # https://cursosdedesarrollo.com/2022/01/nginx-proxy-manager-o-la-manera-sencilla-de-manejar-acceso-a-tus-servicios-docker/
+  # https://docker-ip:9443/
+  portainer:
+    # Confiuracion del dock
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    # Configuracion de puertos
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+      - "8000:8000"
+    restart: always
+    # Configuracion de discos
+    volumes:
+      - ./portainer-data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    # Configuramos una IP estatica para el dock
+    networks:
+      lan_portainer:
+        ipv4_address: 192.168.200.2
+    hostname: portainer
+
+  # Ahora creamos el servidor mariadb para que se conecten las aplicaciones, declaramos una
+  # coneccion para npm que funciona en conjunto con este compose, ademas le agrego phpmyadmin
+  # para poder manejar las BD de forma facil.
+  # Base de datos
+  mariadb:
+    container_name: mariadb
+    image: mariadb:latest
+    # Configuramos el password de root y del usuario npm para conectarse a la DB
+    environment:
+      MYSQL_ROOT_PASSWORD: CambiaMe
+      MYSQL_DATABASE: npm
+      MYSQL_USER: npm
+      MYSQL_PASSWORD: npm
+    restart: always
+    # Configuracion de puertos
+    ports:
+      - '3306:3306'
+    # Configuracion de discos
+    volumes:
+      - ./mariadb-data:/var/lib/mysql
+    # Configuramos una IP estatica para el dock en la red portainer
+    networks:
+      lan_portainer:
+        ipv4_address: 192.168.200.3
+    hostname: mariadb
+
+  # phpmyadmin para manejar la DB
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    # Comfiguramos el nombre del servidor de BD, no configuro usuario y password por razones de seguridad
+    environment:
+      PMA_HOST: mariadb
+    # Configuracion de puertos
+    ports:
+      - '8100:80'
+    depends_on:
+      - mariadb
+    # Configuramos una IP estatica para el dock
+    networks:
+      lan_portainer:
+        ipv4_address: 192.168.200.4
+    hostname: phpmyadmin
+
+  # Creamos nginx-proxy-manager para vincular la red con portainer y mariadb
+  # https://nginxproxymanager.com/setup/
+  # https://github.com/NginxProxyManager/nginx-proxy-manager
+  # Credenciales por defecto
+  # Email: admin@example.com
+  # Password: changeme
+  npm:
+    container_name: npm
+    image: 'jc21/nginx-proxy-manager:latest'
+    restart: always
+    ports:
+      # These ports are in format <host-port>:<container-port>
+      - '80:80' # Public HTTP Port
+      - '443:443' # Public HTTPS Port
+      - '81:81' # Admin Web Port
+      # Add any other Stream port you want to expose
+      # - '21:21' # FTP
+    environment:
+      # Coneccion a la base de datos
+      # Esta configuracion es para conectarse a una DB que se hizo en otro dock,
+      # se deben crear las credenciales en el servidor
+      DB_MYSQL_HOST: "mariadb"
+      DB_MYSQL_PORT: 3306
+      DB_MYSQL_USER: "npm"
+      DB_MYSQL_PASSWORD: "npm"
+      DB_MYSQL_NAME: "npm"
+      # Uncomment this if IPv6 is not enabled on your host
+      DISABLE_IPV6: 'true'
+    # Configuracion de discos
+    volumes:
+      - ./npm-data:/data
+      - ./letsencrypt:/etc/letsencrypt
+    depends_on:
+      - mariadb
+    # Configuramos una IP estatica para el dock
+    networks:
+      lan_npm:
+        ipv4_address: 192.168.210.2
+      lan_portainer:
+        ipv4_address: 192.168.200.5
+    hostname: npm
+
+# Declaramos las redes que vamos a utilizar, lan_npm es para acceso publico mientras que 
+# en lan_portainer van a estar los docks
+networks:
+  # Configuracion de la red lan_npm para acceder desde afuera
+  lan_npm:
+    ipam:
+      config:
+        - subnet: 192.168.210.0/24
+    driver: bridge
+  # Configuracion de la red lan_portainer esta red es interna para los dockers
+  lan_portainer:
+    ipam:
+      config:
+        - subnet: 192.168.200.0/24
+    driver: bridge

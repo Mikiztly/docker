@@ -6,11 +6,15 @@ Utilidades para manejar docker con un solo servidor:
 **portainer.yml - COMPROBADO**
 Interfaz para manejar docker desde una web, muy completo y facil de utilizar, se configura red interna e IP estatica.
 
-**mariadb-phpmyadmin.yml - COMPROBADO**
+mariadb-phpmyadmin.yml
 Un servidor de Base de Datos para utilizar solamente este para los demas servicios: nginx-proxy-manager, wordpress, etc. Configurado con IP estatica para conectarse con portainer.
 
-**nginx-proxy-manager-mariadb.yml  - COMPROBADO**
+nginx-proxy-manager-mariadb.yml
 Utilitario para manejar dominios, sub-dominios, certificados, etc.
+
+**portainer+npm+mariadb.yml - COMPROBADO**
+cuatro servicios que se deben iniciar juntos para que funcionen bien: portainer + mariadb + phpmyadmin + nginx-proxy-manager.
+Estan configurados con IP estatica para poder conectarse con otros docks y por nombre de host.
 
 Utilidades para manejar via web docker swarm:
 

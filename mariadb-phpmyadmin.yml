@@ -1,4 +1,4 @@
-# COMPROBADO
+
 # https://github.com/mytchallb/blog-local-mysql-phpmyadmin/blob/main/docker-compose.yml
 # TENER EN CUENTA: este archivo lo configure despues de usar portainer para manejar los dock
 # El monbre de la red que me creo fue [usuario]_[nombre_red], por lo que hay que ver el
