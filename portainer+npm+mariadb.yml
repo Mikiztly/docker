@@ -86,7 +86,7 @@ services:
   npm:
     container_name: npm
     image: 'jc21/nginx-proxy-manager:latest'
-    restart: always
+    restart: unless-stopped
     ports:
       # These ports are in format <host-port>:<container-port>
       - '80:80' # Public HTTP Port
@@ -96,8 +96,7 @@ services:
       # - '21:21' # FTP
     environment:
       # Coneccion a la base de datos
-      # Esta configuracion es para conectarse a una DB que se hizo en otro dock,
-      # se deben crear las credenciales en el servidor
+      # Esta configuracion es para conectarse a la DB creada anteriormente
       DB_MYSQL_HOST: "mariadb"
       DB_MYSQL_PORT: 3306
       DB_MYSQL_USER: "npm"
@@ -125,6 +124,7 @@ networks:
   # Configuracion de la red lan_npm para acceder desde afuera
   lan_npm:
     name: lan_npm
+    driver: bridge
     ipam:
       config:
         - subnet: 192.168.210.0/24
