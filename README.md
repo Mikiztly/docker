@@ -5,7 +5,7 @@ Utilidades para manejar docker con un solo servidor:
 
 **portainer.yml - COMPROBADO**
 
-Se puede utilizar en la consola:
+Se puede utilizar en la consola: <br>
 wget -O docker-compose.yml https://github.com/Mikiztly/docker/raw/main/compose/portainer.yml
 
 https://docs.portainer.io/start/install-ce/server/swarm/linux
@@ -13,15 +13,15 @@ Para manejar hasta 3 nodos con la version Community Edition o si te registras co
 
 **portainer+npm+mariadb.yml - COMPROBADO**
 
-Se puede utilizar en la consola:
+Se puede utilizar en la consola:<br>
 wget -O docker-compose.yml https://github.com/Mikiztly/docker/raw/main/compose/portainer+npm+mariadb.yml
 
-Cuatro servicios que se deben iniciar juntos para que funcionen bien: portainer + mariadb + phpmyadmin + nginx-proxy-manager. Estan configurados con IP estatica para poder conectarse con otros docks y por nombre de host, hay que tener cuidado con dos aspectos muy importantes:
-    1) la declaracion de IP es estatica para poder incorporar mas servicios, para agregar un nuevo servicio se debe declarar la IP y configurar la lan como "external: true"
+Cuatro servicios que se deben iniciar juntos para que funcionen bien: portainer + mariadb + phpmyadmin + nginx-proxy-manager. Estan configurados con IP estatica para poder conectarse con otros docks y por nombre de host, hay que tener cuidado con dos aspectos muy importantes:<br>
+    1) la declaracion de IP es estatica para poder incorporar mas servicios, para agregar un nuevo servicio se debe declarar la IP y configurar la lan como "external: true"<br>
     2) Los puertos no se declaran ya que se manejan con el NPM (Nginx-Proxy-Manager)
 
-Nginx-Proxy-Manager
-https://nginxproxymanager.com/setup/
+Nginx-Proxy-Manager<br>
+https://nginxproxymanager.com/setup/<br>
 Segun la documentacion oficial sirve para proporcionar a los usuarios una manera fácil de configurar hosts con un proxy inverso y certificados SSL, tiene que ser tan fácil que un mono puede hacerlo. En resumen sirve para manejar dominios, sub-dominios y certificados ssl, etc.
 
 **wordpress-mariadb.yml - COMPROBADO**
