@@ -10,6 +10,7 @@ services:
   # Creamos el dock de portainer con una red propia para que se utilice con npm
   # https://docs.portainer.io/start/install-ce/server/swarm/linux -> Comunity Edition
   # https://docs.portainer.io/start/install/server/swarm/linux -> Business Edition
+  # https://github.com/portainer/portainer-compose/tree/master
   # https://cursosdedesarrollo.com/2022/01/nginx-proxy-manager-o-la-manera-sencilla-de-manejar-acceso-a-tus-servicios-docker/
   # https://docker-ip:9443/
   portainer:
@@ -27,10 +28,10 @@ services:
       - ./portainer-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     # Configuramos una IP estatica para el dock
-    networks:
-      lan_portainer:
-        ipv4_address: 192.168.200.2
     hostname: portainer
+    networks:
+      lan_docker:
+        ipv4_address: 192.168.200.2
 
   # Ahora creamos el servidor mariadb para que se conecten las aplicaciones, declaramos una
   # coneccion para npm que funciona en conjunto con este compose, ademas le agrego phpmyadmin
@@ -53,10 +54,10 @@ services:
     volumes:
       - ./mariadb-data:/var/lib/mysql
     # Configuramos una IP estatica para el dock en la red portainer
-    networks:
-      lan_portainer:
-        ipv4_address: 192.168.200.3
     hostname: mariadb
+    networks:
+      lan_docker:
+        ipv4_address: 192.168.200.3
 
   # phpmyadmin para manejar la DB
   phpmyadmin:
@@ -72,10 +73,10 @@ services:
     depends_on:
       - mariadb
     # Configuramos una IP estatica para el dock
-    networks:
-      lan_portainer:
-        ipv4_address: 192.168.200.4
     hostname: phpmyadmin
+    networks:
+      lan_docker:
+        ipv4_address: 192.168.200.4
 
   # Creamos nginx-proxy-manager para vincular la red con portainer y mariadb
   # https://nginxproxymanager.com/setup/
@@ -111,28 +112,18 @@ services:
     depends_on:
       - mariadb
     # Configuramos una IP estatica para el dock
-    networks:
-      lan_npm:
-        ipv4_address: 192.168.210.2
-      lan_portainer:
-        ipv4_address: 192.168.200.5
     hostname: npm
+    networks:
+      lan_docker:
+        ipv4_address: 192.168.200.5
 
-# Declaramos las redes que vamos a utilizar, lan_npm es para acceso publico mientras que 
-# en lan_portainer van a estar los docks
+# Declaramos la rede que vamos a utilizar
 networks:
-  # Configuracion de la red lan_npm para acceder desde afuera
-  lan_npm:
-    name: lan_npm
+  # Configuracion de la red lan_docker
+  lan_docker:
+    name: lan_docker
     driver: bridge
     ipam:
       config:
-        - subnet: 192.168.210.0/24
-          gateway: 192.168.210.1
-  # Configuracion de la red lan_portainer esta red es interna para los dockers
-  lan_portainer:
-    name: lan_portainer
-    internal: true
-    ipam:
-      config:
         - subnet: 192.168.200.0/24
+          gateway: 192.168.200.1
