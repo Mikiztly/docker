@@ -124,13 +124,15 @@ services:
 networks:
   # Configuracion de la red lan_npm para acceder desde afuera
   lan_npm:
+    name: lan_npm
     ipam:
       config:
         - subnet: 192.168.210.0/24
-    driver: bridge
+          gateway: 192.168.210.1
   # Configuracion de la red lan_portainer esta red es interna para los dockers
   lan_portainer:
+    name: lan_portainer
+    internal: true
     ipam:
       config:
         - subnet: 192.168.200.0/24
-    driver: bridge

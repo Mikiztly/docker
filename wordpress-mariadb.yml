@@ -1,34 +1,46 @@
-# https://medium.com/@m7adeel/docker-compose-setting-up-wordpress-fcb78701723a
+# https://iesgn.github.io/curso_docker_2021/sesion5/wordpress.html
+# Creado teniendo en cuenta que esta funcionando el stack portainer + mariadb
+# + phpmyadmin + nginx-proxy-manager, por lo que el servidor mariadb ya esta creado
+# primero creamos las credenciales con phpmyadmin
 
-version: '3'
+version: '3.8'
 
 services:
-  db:
-    image: mariadb:latest
-    command: '--default-authentication-plugin=mysql_native_password'
-    volumes:
-      - db_data:/var/lib/mysql
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=wordpress
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=wordpress
-    expose:
-      - 3306
-
+  # Dejo la configuracion original por si acaso
   wordpress:
-    image: wordpress:latest
-    ports:
-      - 18000:80
+    container_name: wordpress
+    image: wordpress
     restart: always
-    depends_on:
-      - db
     environment:
-      - WORDPRESS_DB_HOST=db
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=wordpress
-      - WORDPRESS_DB_NAME=wordpress
-
-volumes:
-  db_data:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_DB_NAME: wordpress
+    ports:
+      # - 80:80
+      - '8101:80'
+    volumes:
+      - ./wordpress-data:/var/www/html # /wp-content
+    # Configuramos una IP estatica para el dock en la red portainer
+    networks:
+      lan_portainer:
+        ipv4_address: 192.168.200.6
+    hostname: wordpress
+networks:
+  lan_portainer:
+    external: true
+  # Como ya tengo DB comento para dejar la configuracion original
+#  db:
+#    container_name: servidor_mysql
+#    image: mariadb
+#    restart: always
+#    environment:
+#      MYSQL_DATABASE: bd_wp
+#      MYSQL_USER: user_wp
+#      MYSQL_PASSWORD: asdasd
+#      MYSQL_ROOT_PASSWORD: asdasd
+#    volumes:
+#      - mariadb_data:/var/lib/mysql
+#volumes:
+#    wordpress_data:
+#    mariadb_data:
