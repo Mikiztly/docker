@@ -1,28 +1,20 @@
 # docker
-Archivos de configuración para Docker Compose:
+Archivos de configuración para Docker Compose, en el directorio compose estan los ejemplos para utilizar con un solo nodo. En el directorio swarm estan los archivos configurados con un swarm de 3 workers, es la configuracion que voy a utilizar para hacer las pruebas
 
 Utilidades para manejar docker con un solo servidor:
 
 **portainer.yml - COMPROBADO**
-Interfaz para manejar docker desde una web, muy completo y facil de utilizar, se configura red interna e IP estatica.
-
-mariadb-phpmyadmin.yml
-Un servidor de Base de Datos para utilizar solamente este para los demas servicios: nginx-proxy-manager, wordpress, etc. Configurado con IP estatica para conectarse con portainer.
-
-nginx-proxy-manager-mariadb.yml
-Utilitario para manejar dominios, sub-dominios, certificados, etc.
+https://docs.portainer.io/start/install-ce/server/swarm/linux
+Para manejar hasta 3 nodos con la version Community Edition o si te registras con Business Edition, para mas nodos hay que pagar, es una interfaz para manejar docker desde una web muy completa y facil de utilizar. Es la configuracion basica para ver si nos convence, si se va a utilizar para produccion se deben hacer muchos cambios.
 
 **portainer+npm+mariadb.yml - COMPROBADO**
-cuatro servicios que se deben iniciar juntos para que funcionen bien: portainer + mariadb + phpmyadmin + nginx-proxy-manager.
-Estan configurados con IP estatica para poder conectarse con otros docks y por nombre de host.
+Cuatro servicios que se deben iniciar juntos para que funcionen bien: portainer + mariadb + phpmyadmin + nginx-proxy-manager. Estan configurados con IP estatica para poder conectarse con otros docks y por nombre de host, hay que tener cuidado con dos aspectos muy importantes:
+    1) la declaracion de IP es estatica para poder incorporar mas servicios, para agregar un nuevo servicio se debe declarar la IP y configurar la lan como "external: true"
+    2) Los puertos no se declaran ya que se manejan con el NPM (Nginx-Proxy-Manager)
 
-Utilidades para manejar via web docker swarm:
+mariadb-phpmyadmin.yml
+Un servidor de Base de Datos
 
-portainer-agent-stack.yml:
-https://docs.portainer.io/start/install-ce/server/swarm/linux
-Para manejar hasta 3 nodos con la version Community Edition o si te registras con Business Edition, para mas nodos hay que pagar.
-
-nginx-proxy-manager.yml
+nginx-proxy-manager-mariadb.yml
 https://nginxproxymanager.com/setup/
-Es para manejar dominios, sub-dominios y certificados ssl
-
+Es para manejar dominios, sub-dominios y certificados ssl, etc.

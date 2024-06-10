@@ -17,11 +17,11 @@ services:
     # Confiuracion del dock
     container_name: portainer
     image: portainer/portainer-ce:latest
-    # Configuracion de puertos
-    ports:
-      - "9000:9000"
-      - "9443:9443"
-      - "8000:8000"
+    # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
+    # ports:
+      # - "9000:9000"
+      # - "9443:9443"
+      # - "8000:8000"
     restart: always
     # Configuracion de discos
     volumes:
@@ -47,9 +47,9 @@ services:
       MYSQL_USER: npm
       MYSQL_PASSWORD: npm
     restart: always
-    # Configuracion de puertos
-    ports:
-      - '3306:3306'
+    # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
+    # ports:
+      # - '3306:3306'
     # Configuracion de discos
     volumes:
       - ./mariadb-data:/var/lib/mysql
@@ -67,9 +67,9 @@ services:
     # Comfiguramos el nombre del servidor de BD, no configuro usuario y password por razones de seguridad
     environment:
       PMA_HOST: mariadb
-    # Configuracion de puertos
-    ports:
-      - '8100:80'
+    # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
+    # ports:
+      # - '8100:80'
     depends_on:
       - mariadb
     # Configuramos una IP estatica para el dock
@@ -88,6 +88,7 @@ services:
     container_name: npm
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
+    # Estos son los unicos puertos a declara para que funcione todo con el proxy NPM
     ports:
       # These ports are in format <host-port>:<container-port>
       - '80:80' # Public HTTP Port

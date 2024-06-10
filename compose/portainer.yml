@@ -1,7 +1,6 @@
 # COMPROBADO
 # https://docs.portainer.io/start/install-ce/server/swarm/linux -> Comunity Edition
 # https://docs.portainer.io/start/install/server/swarm/linux -> Business Edition
-# https://cursosdedesarrollo.com/2022/01/nginx-proxy-manager-o-la-manera-sencilla-de-manejar-acceso-a-tus-servicios-docker/
 # https://docker-ip:9443/
 
 version: '3.8'
@@ -21,15 +20,3 @@ services:
     volumes:
       - ./volumes/portainer_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
-    # Configuramos una IP estatica para el dock
-    networks:
-      lan_cloud:
-        ipv4_address: 192.168.200.2
-    hostname: portainer
-
-# Declaramos la red que vamos a utilizar
-networks:
-  lan_cloud:
-    ipam:
-      config:
-        - subnet: 192.168.200.0/24
