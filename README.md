@@ -11,7 +11,7 @@ wget -O docker-compose.yml https://github.com/Mikiztly/docker/raw/main/compose/p
 https://docs.portainer.io/start/install-ce/server/swarm/linux
 Para manejar hasta 3 nodos con la version Community Edition o si te registras con Business Edition, para mas nodos hay que pagar, es una interfaz para manejar docker desde una web muy completa y facil de utilizar. Es la configuracion basica para ver si nos convence, si se va a utilizar para produccion se deben hacer muchos cambios.
 
-**portainer+npm+mariadb.yml - COMPROBADO**
+**portainer+npm+mariadb.yml**
 
 Se puede utilizar en la consola:<br>
 wget -O docker-compose.yml https://github.com/Mikiztly/docker/raw/main/compose/portainer+npm+mariadb.yml
@@ -24,7 +24,13 @@ Nginx-Proxy-Manager<br>
 https://nginxproxymanager.com/setup/<br>
 Segun la documentacion oficial sirve para proporcionar a los usuarios una manera fácil de configurar hosts con un proxy inverso y certificados SSL, tiene que ser tan fácil que un mono puede hacerlo. En resumen sirve para manejar dominios, sub-dominios y certificados ssl, etc.
 
-**wordpress-mariadb.yml - COMPROBADO**
+**wordpress-mariadb.yml**
 
 Popular motor de creacion de paginas web muy flexible y configurable, esta creado con portainer+npm+mariadb.yml funcionando.
 Por lo tanto se conecta a una red y un servidor DB existente, antes de levantar este dock crear las credenciales con phpmyadmin
+
+**grafana-monitor.yml**
+
+Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene dos contenedores:<br>
+1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux
+2) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores.

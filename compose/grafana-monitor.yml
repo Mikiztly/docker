@@ -1,0 +1,44 @@
+# COMPROBADO
+# Stack para habilitar el monitoreo en un servidor grafana ya funcionando
+# Al igual que otros stacks esta con la configurcion de IP fija
+# https://grafana.com/grafana/dashboards/893-main/
+# https://github.com/google/cadvisor
+
+version: '3.8'
+services:
+  # Con esto vamos a obtener informacion de la maquina
+  node-exporter:
+    container_name: node_exporter
+    image: prom/node-exporter:latest
+    restart: unless-stopped
+    expose:
+      - 9100
+    hostname: node-exporter
+    networks:
+      lan_docker:
+        ipv4_address: 192.168.200.7
+
+  # Este contenedor es el que va a monitoreear docker
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor #google/cadvisor:latest
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    expose:
+      - 8080
+    ports:
+      - '8080:8080'
+    # Configuramos una IP estatica para el dock en la red portainer
+    hostname: cadvisor
+    networks:
+      lan_docker:
+        ipv4_address: 192.168.200.8
+
+networks:
+  lan_docker:
+    external: true
