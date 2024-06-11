@@ -6,6 +6,10 @@
 # Docker. Por ejemplo voy a tener un solo servidor mariadb para todas los servicios
 
 version: '3.8'
+
+# Le doy un nombre descriptivo para saber que es en portainer
+name: administracion
+
 services:
   # Creamos el dock de portainer con una red propia para que se utilice con npm
   # https://docs.portainer.io/start/install-ce/server/swarm/linux -> Comunity Edition
