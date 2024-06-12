@@ -29,8 +29,16 @@ Segun la documentacion oficial sirve para proporcionar a los usuarios una manera
 Popular motor de creacion de paginas web muy flexible y configurable, esta creado con portainer+npm+mariadb.yml funcionando.
 Por lo tanto se conecta a una red y un servidor DB existente, antes de levantar este dock crear las credenciales con phpmyadmin
 
-**grafana-monitor.yml**
+**grafana/grafana-monitor.yml FALTA COMPROBAR**
 
 Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene dos contenedores:<br>
 1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux
 2) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores.
+
+**grafana/grafana.yml**
+
+Motor para crear graficos y dashboards desde distintos servicios, proetheus, loki, zabbix, etc.
+Se delaro una URL personalizada para mejor acceso
+Tiene instalados 2 plugins:<br>
+1) grafana-clock-panel -> Un reloj bastante configurable
+2) alexanderzobnin-zabbix-app -> Sirve para conectarse a un Zabbix y poder graficar con esos datos

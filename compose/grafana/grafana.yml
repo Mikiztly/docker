@@ -1,0 +1,38 @@
+# COMPROBADO
+# Motor para crear graficos y dashboards desde distintos servicios, proetheus, loki, zabbix, etc
+
+# https://grafana.com/docs/grafana/latest/setup-grafana/installation/docker/
+
+version: '3.8'
+
+services:
+  # https://docker-ip:3000/
+  grafana:
+    # Confiuracion del dock
+    container_name: grafana
+    image: grafana/grafana-oss
+    # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
+    # ports:
+      # - "3000:3000"
+    restart: always
+    # Hago varias configuraciones interesantes
+    environment:
+      # Le doy una url para que sea mas facil ingresar
+      - GF_SERVER_ROOT_URL=http://grafana.strong.local/
+      # Plugin de un reloj bastante configurable, tambien el plugin para tener datos desde zabbix
+      - GF_INSTALL_PLUGINS=grafana-clock-panel, alexanderzobnin-zabbix-app
+
+    # Configuracion de discos
+    volumes:
+      - /mnt/docker-data/grafana-data:/var/lib/grafana
+    # Configuramos una IP estatica para el dock
+    hostname: grafana
+    networks:
+      lan_docker:
+        ipv4_address: 192.168.200.6
+
+# Declaramos la red que vamos a utilizar
+networks:
+  # Configuracion de la red lan_docker
+  lan_docker:
+    external: true
