@@ -29,7 +29,7 @@ services:
     restart: always
     # Configuracion de discos
     volumes:
-      - ./portainer-data:/data
+      - portainer-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     # Configuramos una IP estatica para el dock
     hostname: portainer
@@ -56,7 +56,7 @@ services:
       # - '3306:3306'
     # Configuracion de discos
     volumes:
-      - ./mariadb-data:/var/lib/mysql
+      - mariadb-data:/var/lib/mysql
     # Configuramos una IP estatica para el dock en la red portainer
     hostname: mariadb
     networks:
@@ -112,8 +112,8 @@ services:
       DISABLE_IPV6: 'true'
     # Configuracion de discos
     volumes:
-      - ./npm-data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - npm-data:/data
+      - letsencrypt:/etc/letsencrypt
     depends_on:
       - mariadb
     # Configuramos una IP estatica para el dock
@@ -122,7 +122,7 @@ services:
       lan_docker:
         ipv4_address: 192.168.200.5
 
-# Declaramos la rede que vamos a utilizar
+# Declaramos la red que vamos a utilizar
 networks:
   # Configuracion de la red lan_docker
   lan_docker:
@@ -132,3 +132,33 @@ networks:
       config:
         - subnet: 192.168.200.0/24
           gateway: 192.168.200.1
+
+# Como hago uso de los volumenes aca hago las declaraciones
+volumes:
+  # Volumen ara guardar los datos de Portainer
+  portainer-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/portainer-data
+      o: bind
+  # Volumen ara guardar los datos de mariadb
+  mariadb-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/mariadb-data
+      o: bind
+  # Volumen ara guardar los datos de nginx-proxy-manager
+  npm-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/npm-data
+      o: bind
+  letsencrypt:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/letsencrypt
+      o: bind
