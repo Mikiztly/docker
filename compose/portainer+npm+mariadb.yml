@@ -21,12 +21,12 @@ services:
     # Confiuracion del dock
     container_name: portainer
     image: portainer/portainer-ce:latest
+    restart: always
     # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
     # ports:
       # - "9000:9000"
       # - "9443:9443"
       # - "8000:8000"
-    restart: always
     # Configuracion de discos
     volumes:
       - portainer-data:/data
@@ -44,13 +44,13 @@ services:
   mariadb:
     container_name: mariadb
     image: mariadb:latest
+    restart: always
     # Configuramos el password de root y del usuario npm para conectarse a la DB
     environment:
       MYSQL_ROOT_PASSWORD: CambiaMe
       MYSQL_DATABASE: npm
       MYSQL_USER: npm
       MYSQL_PASSWORD: npm
-    restart: always
     # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
     # ports:
       # - '3306:3306'
