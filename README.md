@@ -54,9 +54,9 @@ Tiene instalados 2 plugins:<br>
 
 Base de datos para utilizar con grafana, sirve para recolectar datos de varias fuentes, hay que generar las carpetas y subir el archivo prometheus-config.yml para que funcione bien el servidor.
 
-
 **grafana/grafana-monitor.yml FALTA COMPROBAR**
 
-Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene dos contenedores:<br>
+Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene tres contenedores:<br>
 1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux
-2) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores.
+2) blackbox-exporter: el agente para monitorizar paginas web
+3) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores.

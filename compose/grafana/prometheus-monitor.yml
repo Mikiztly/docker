@@ -37,24 +37,24 @@ services:
       lan_docker:
 
   # Este contenedor es el que va a monitoreear docker
-#  cadvisor:
-#    container_name: cadvisor
-#    image: gcr.io/cadvisor/cadvisor #google/cadvisor:latest
-#    restart: unless-stopped
-#    volumes:
-#      - /:/rootfs:ro
-#      - /var/run:/var/run:rw
-#      - /sys:/sys:ro
-#      - /var/lib/docker/:/var/lib/docker:ro
-#      - /dev/disk/:/dev/disk:ro
-#    expose:
-#      - 8080
-#    ports:
-#      - '8080:8080'
+  # https://prometheus.io/docs/guides/cadvisor/#docker-compose-configuration
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor #google/cadvisor:latest
+    restart: unless-stopped
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    # Para que se pueda conectar tenemos que exponer el puerto
+    ports:
+      - '8080:8080'
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
-#    hostname: cadvisor
-#    networks:
-#      lan_docker:
+    hostname: cadvisor
+    networks:
+      lan_docker:
 
 # Declaramos la red que vamos a utilizar
 networks:

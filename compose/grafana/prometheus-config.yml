@@ -26,4 +26,5 @@ scrape_configs:
       - targets:
         - prometheus:9090 # prometheus
         - 192.168.200.9:9100 # node-exporter
-        - 192.168.200.10:9115 # blackbox-exporter
+        - 192.168.200.8:9115 # blackbox-exporter
+        - 192.168.200.8:8080 # cadvisor
