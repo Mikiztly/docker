@@ -13,9 +13,9 @@ services:
     image: prom/prometheus
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
-      # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
-    # ports:
-      # - "9090:9090"
+    # Para que se pueda conectar grafana tenemos que exponer el puerto
+    ports:
+      - "9090:9090"
     restart: always
 
     # Configuracion de discos
