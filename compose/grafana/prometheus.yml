@@ -15,7 +15,7 @@ services:
       - '--config.file=/etc/prometheus/prometheus.yml'
     # Para que se pueda conectar grafana tenemos que exponer el puerto
     ports:
-      - "9090:9090"
+      - '9090:9090'
     restart: always
 
     # Configuracion de discos

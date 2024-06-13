@@ -14,8 +14,8 @@ services:
     image: prom/node-exporter:latest
     restart: unless-stopped
     # Para que se pueda conectar tenemos que exponer el puerto
-    expose:
-      - 9100
+    ports:
+      - '9100:9100'
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
     hostname: node-exporter
     networks:
