@@ -17,7 +17,6 @@ services:
     ports:
       - '9090:9090'
     restart: always
-
     # Configuracion de discos
     # Es muy importante que los directorios existan para que el stack funcione
     volumes:
@@ -27,6 +26,7 @@ services:
     hostname: prometheus
     networks:
       lan_docker:
+        ipv4_address: 192.168.200.254
 
 # Declaramos la red que vamos a utilizar
 networks:
