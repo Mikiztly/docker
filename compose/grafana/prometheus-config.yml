@@ -21,10 +21,54 @@ rule_files:
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: "local"
-    # Con esto monitoreamos la maquina local, en el target vamos a tener varios colectores:
+    # Con esto monitoreamos la maquina local, principalmente para saber que funciona todo
+    # En el target vamos a tener varios colectores:
     static_configs:
       - targets:
         - prometheus:9090 # prometheus
         - blackbox-exporter:9115 # blackbox-exporter
         - cadvisor:8080 # cadvisor
         - node-exporter:9100 # node-exporter
+
+  # Con esta configuracion carga el archivo blackbox-targets.yml para obtener la lista de sitios que vamos a monitorizar, en el archivo se pone una linea para monitorizar la pagina de la siguiente forma:
+  #
+  # <BLACKBOX_EXPORTER_IP_PORT>:_:<<MODULO>:_:<ESTADO>:_:<TIPO_IP>:_:<TARGET_URL>
+  #
+  # <BLACKBOX_EXPORTER_IP_PORT> -> aca va la IP/Direccion en donde corre el blackbox, si la pagina no lo tiene se debe poner la IP/Direccion de prometheus
+  # <MODULO> -> Hay dos modulos: [http_2xx] para monitorizar la web y ssl / [icmp] para verificar por ping que la IP/Direccion este activa, sirve para ver IP publica y/o local
+  # <ESTADO> -> Esto lo utilizo para agrupar las paginas, por ejemplo: Produccion / Pruebas / Desarrollo
+  # <TIPO_IP> -> Otra etiqueta para saber que estoy monitorizando: URL - PUBLICA - PRIVADA
+  # <TARGET_URL> -> Es el nombre de la INSTANCIA para saber que pagina se monitorea
+  - job_name: 'monitoreo-web'
+    metrics_path: /probe
+    file_sd_configs: # Indicamos el path del archivo para obtener la lista de sitios que vamos a monitorizar
+      - files:
+        - /etc/prometheus/blackbox-targets.yml
+    # Con esta configuracion renombramos los labels para organizarse mejor y obtener las estadisticas especificas.
+    relabel_configs:
+      # Indicamos que modulo vamos a utilizar
+      - source_labels: [__address__]
+        regex: '.*:_:(.*):_:.*:_:.*:_:.*'
+        target_label: module
+      # Etiqueta <TIPO_IP>
+      - source_labels: [__address__]
+        regex: '.*:_:.*:_:.*:_:(.*):_:.*'
+        target_label: geohash
+      # Nonbre de la pagina a monitorizar
+      - source_labels: [__address__]
+        regex: '.*:_:.*:_:.*:_:.*:_:(.*)'
+        target_label: instance
+      # Etiqueta <ESTADO>
+      - source_labels: [__address__]
+        regex: '.*:_:.*:_:(.*):_:.*:_:.*'
+        target_label: job
+      # Indicamos a blackbox exporter que modulo utilizar
+      - source_labels: [module]
+        target_label: __param_module
+      # Indicamos a blackbox exporter la direccion a monitorizar
+      - source_labels: [instance]
+        target_label: __param_target
+      # IP/Direccion donde corre blackbox
+      - source_labels: [__address__]
+        regex: '(.*):_:.*:_:.*:_:.*:_:.*'
+        target_label: __address__

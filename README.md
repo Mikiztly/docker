@@ -53,6 +53,9 @@ Tiene instalados 2 plugins:<br>
 **prometheus.yml**
 
 Base de datos para utilizar con grafana, sirve para recolectar datos de varias fuentes, hay que generar las carpetas y subir el archivo prometheus-config.yml para que funcione bien el servidor.
+Tiene dos archivos de configuracion que van en la carpeta /etc/prometheus del docker:
+1) **prometheus-config.yml** esta con una configuracion personalizada y consulta el otro archivo para obtener una lista de paginas web para monitorizar
+2) **blackbox-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo.
 Se le configuro la ultima IP utilizable para poder conectar sin problemas con grafana
 
 **grafana/grafana-monitor.yml FALTA COMPROBAR**
