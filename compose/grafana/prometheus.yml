@@ -50,6 +50,6 @@ volumes:
     driver: local # Define the driver and options under the volume name
     driver_opts:
       type: none
-      device: /mnt/docker-data/prometheus/data
+      device: /mnt/docker-data/prometheus
       o: bind
     name: prometheus-data
