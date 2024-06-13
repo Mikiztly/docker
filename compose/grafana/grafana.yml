@@ -7,6 +7,7 @@ version: '3.8'
 
 services:
   # https://docker-ip:3000/
+  # Usuario y pass: admin
   grafana:
     # Confiuracion del dock
     container_name: grafana
@@ -23,16 +24,28 @@ services:
       - GF_INSTALL_PLUGINS=grafana-clock-panel, alexanderzobnin-zabbix-app
 
     # Configuracion de discos
+    # Es muy importante que los directorios existan para que el stack funcione
     volumes:
-      - /mnt/docker-data/grafana-data:/var/lib/grafana
-    # Configuramos una IP estatica para el dock
+      - grafana-data:/var/lib/grafana
+    # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
     hostname: grafana
     networks:
       lan_docker:
-        ipv4_address: 192.168.200.6
 
 # Declaramos la red que vamos a utilizar
 networks:
   # Configuracion de la red lan_docker
   lan_docker:
     external: true
+
+# Como hago uso de los volumenes aca hago las declaraciones
+# Es muy importante que los directorios existan para que el stack funcione
+volumes:
+  # Volumen ara guardar los datos de grafana
+  grafana-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/grafana-data
+      o: bind
+    name: grafana-data

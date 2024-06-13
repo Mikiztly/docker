@@ -23,17 +23,24 @@ Cuatro servicios que se deben iniciar juntos para que funcionen bien: portainer 
 Nginx-Proxy-Manager<br>
 https://nginxproxymanager.com/setup/<br>
 Segun la documentacion oficial sirve para proporcionar a los usuarios una manera fácil de configurar hosts con un proxy inverso y certificados SSL, tiene que ser tan fácil que un mono puede hacerlo. En resumen sirve para manejar dominios, sub-dominios y certificados ssl, etc.
+**IMPORTANTE**
+Como le agregue el mapeo de volumenes a otro directorio, en el nuevo directorio tienen que estar las liguientes carpetas:
+
+portainer-data
+mariadb-data
+npm-data
+letsencrypt
+
+Si no existen en el directorio (en mi caso /mnt/docker-data) va a dar error al levantar el docker
 
 **wordpress-mariadb.yml**
 
 Popular motor de creacion de paginas web muy flexible y configurable, esta creado con portainer+npm+mariadb.yml funcionando.
 Por lo tanto se conecta a una red y un servidor DB existente, antes de levantar este dock crear las credenciales con phpmyadmin
 
-**grafana/grafana-monitor.yml FALTA COMPROBAR**
+**file-browser.yml**
 
-Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene dos contenedores:<br>
-1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux
-2) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores.
+Un explorador de archivos donde podemos ver editar , subir, etc archivos desde el servidor. Muy util para evitar utilizar ssh o ftp
 
 **grafana/grafana.yml**
 
@@ -42,3 +49,14 @@ Se delaro una URL personalizada para mejor acceso
 Tiene instalados 2 plugins:<br>
 1) grafana-clock-panel -> Un reloj bastante configurable
 2) alexanderzobnin-zabbix-app -> Sirve para conectarse a un Zabbix y poder graficar con esos datos
+
+**prometheus.yml**
+
+Base de datos para utilizar con grafana, sirve para recolectar datos de varias fuentes, hay que generar las carpetas y subir el archivo prometheus-config.yml para que funcione bien el servidor.
+
+
+**grafana/grafana-monitor.yml FALTA COMPROBAR**
+
+Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene dos contenedores:<br>
+1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux
+2) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores.

@@ -10,13 +10,24 @@ services:
     # Confiuracion del dock
     container_name: portainer
     image: portainer/portainer-ce:latest
+    restart: always
     # Configuracion de puertos
     ports:
       - "9000:9000"
       - "9443:9443"
       - "8000:8000"
-    restart: always
     # Configuracion de discos
     volumes:
-      - ./volumes/portainer_data:/data
+      - portainer-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
+# Como hago uso de los volumenes aca hago las declaraciones
+volumes:
+  # Volumen ara guardar los datos de Portainer
+  portainer-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/portainer-data
+      o: bind
+    name: portainer-data
+    scope: local

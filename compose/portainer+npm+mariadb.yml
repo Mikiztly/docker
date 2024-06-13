@@ -28,6 +28,7 @@ services:
       # - "9443:9443"
       # - "8000:8000"
     # Configuracion de discos
+    # Es muy importante que los directorios existan para que el stack funcione
     volumes:
       - portainer-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
@@ -55,6 +56,7 @@ services:
     # ports:
       # - '3306:3306'
     # Configuracion de discos
+    # Es muy importante que los directorios existan para que el stack funcione
     volumes:
       - mariadb-data:/var/lib/mysql
     # Configuramos una IP estatica para el dock en la red portainer
@@ -111,6 +113,7 @@ services:
       # Uncomment this if IPv6 is not enabled on your host
       DISABLE_IPV6: 'true'
     # Configuracion de discos
+    # Es muy importante que los directorios existan para que el stack funcione
     volumes:
       - npm-data:/data
       - letsencrypt:/etc/letsencrypt
@@ -134,6 +137,7 @@ networks:
           gateway: 192.168.200.1
 
 # Como hago uso de los volumenes aca hago las declaraciones
+# Es muy importante que los directorios existan para que el stack funcione
 volumes:
   # Volumen ara guardar los datos de Portainer
   portainer-data:
@@ -142,6 +146,7 @@ volumes:
       type: none
       device: /mnt/docker-data/portainer-data
       o: bind
+    name: portainer-data
   # Volumen ara guardar los datos de mariadb
   mariadb-data:
     driver: local # Define the driver and options under the volume name
@@ -149,6 +154,7 @@ volumes:
       type: none
       device: /mnt/docker-data/mariadb-data
       o: bind
+    name: mariadb-data
   # Volumen ara guardar los datos de nginx-proxy-manager
   npm-data:
     driver: local # Define the driver and options under the volume name
@@ -156,9 +162,11 @@ volumes:
       type: none
       device: /mnt/docker-data/npm-data
       o: bind
+    name: npm-data
   letsencrypt:
     driver: local # Define the driver and options under the volume name
     driver_opts:
       type: none
       device: /mnt/docker-data/letsencrypt
       o: bind
+    name: letsencrypt

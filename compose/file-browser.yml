@@ -1,0 +1,32 @@
+# COMPROBADO
+# Un explorador de archivos donde podemos ver editar , subir, etc archivos desde el servidor. Muy
+# util para evitar utilizar ssh o ftp
+
+# https://filebrowser.org/installation
+# Usuario y Password: admin
+
+version: '3.8'
+
+services:
+  # https://docker-ip:8080/
+  file-browser:
+    # Confiuracion del dock
+    container_name: file-browser
+    image: filebrowser/filebrowser
+    # Configuracion de puertos, no se declara puertos ya que no hace falta por la configuracion de la red y NPM
+    # ports:
+      # - "8080:80"
+    restart: always
+    # Configuracion de discos
+    volumes:
+      - /mnt/docker-data:/srv
+    # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
+    hostname: grafana
+    networks:
+      lan_docker:
+
+# Declaramos la red que vamos a utilizar
+networks:
+  # Configuracion de la red lan_docker
+  lan_docker:
+    external: true
