@@ -16,6 +16,15 @@ services:
     # Para que se pueda conectar tenemos que exponer el puerto
     ports:
       - '9100:9100'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
     hostname: node-exporter
     networks:

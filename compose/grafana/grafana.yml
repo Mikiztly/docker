@@ -22,7 +22,6 @@ services:
       - GF_SERVER_ROOT_URL=http://grafana.strong.local/
       # Plugin de un reloj bastante configurable, tambien el plugin para tener datos desde zabbix
       - GF_INSTALL_PLUGINS=grafana-clock-panel, alexanderzobnin-zabbix-app
-
     # Configuracion de discos
     # Es muy importante que los directorios existan para que el stack funcione
     volumes:

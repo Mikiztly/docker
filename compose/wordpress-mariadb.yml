@@ -25,7 +25,6 @@ services:
     hostname: wordpress
     networks:
       lan_docker:
-        ipv4_address: 192.168.200.6
 
 networks:
   lan_docker:
