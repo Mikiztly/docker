@@ -17,18 +17,18 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     # 
-    ports:
-     - '9090:9090'
+    # ports:
+     # - '9090:9090'
     restart: always
     # Configuracion de discos
     # Es muy importante que los directorios existan para que el stack funcione
     volumes:
       - prometheus-config:/etc/prometheus
       - prometheus-data:/prometheus
-    # depends_on:
-      # - node-exporter
-      # - blackbox-exporter
-      # - cadvisor
+    depends_on:
+      - node-exporter
+      - blackbox-exporter
+      - cadvisor
     # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
     hostname: prometheus
     networks:
@@ -154,7 +154,7 @@ volumes:
     driver: local # Define the driver and options under the volume name
     driver_opts:
       type: none
-      device: /mnt/docker-data/prometheus
+      device: /mnt/docker-data/prometheus/data
       o: bind
     name: prometheus-data
   # Volumen ara guardar los datos de grafana
