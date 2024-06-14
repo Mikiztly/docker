@@ -17,8 +17,8 @@ services:
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
     # 
-    # ports:
-    #  - '9090:9090'
+    ports:
+     - '9090:9090'
     restart: always
     # Configuracion de discos
     # Es muy importante que los directorios existan para que el stack funcione
