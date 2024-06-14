@@ -26,7 +26,6 @@ services:
     hostname: prometheus
     networks:
       lan_docker:
-        ipv4_address: 192.168.200.254
 
 # Declaramos la red que vamos a utilizar
 networks:
@@ -50,6 +49,6 @@ volumes:
     driver: local # Define the driver and options under the volume name
     driver_opts:
       type: none
-      device: /mnt/docker-data/prometheus
+      device: /mnt/docker-data/prometheus/data
       o: bind
     name: prometheus-data
