@@ -1,0 +1,6 @@
+# Con esta configuracion carga el archivo nodes-targets.yml para obtener la lista de servidores que vamos a monitorizar
+- targets:
+  # En Produccion
+
+  # SRV-FS-OHIGGINS
+  - 10.243.0.229:9100

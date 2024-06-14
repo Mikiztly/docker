@@ -18,12 +18,13 @@ Base de datos para utilizar con grafana, sirve para recolectar datos de varias f
 
 **IMPORTANTE**
 Hay que crear dos carpetas:
-* prometheus/config -> en esta carpeta vamos a cargar los archivos de configuracion de prometheus
+* /prometheus/config -> en esta carpeta vamos a cargar los archivos de configuracion de prometheus
 * /prometheus/data -> en esta carpeta se guardan los datos de prometheus
 
-Hay dos archivos de configuracion que van en la carpeta /etc/prometheus del docker:
-1) **prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, tambien consulta el otro archivo para obtener una lista de paginas web para monitorizar
+Hay tres archivos de configuracion que van en la carpeta /etc/prometheus del docker:
+1) **prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, toma la lista de un archivo para obtener una lista de paginas web para monitorizar
 2) **blackbox-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo.
+3) **nodes-targets.yml** contiene una lista de paginas que se van a monitorizar
 
 **prometheus-monitor.yml**
 
@@ -31,4 +32,3 @@ Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene t
 1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux. Dashboard de testeo: 1860
 2) blackbox-exporter: el agente para monitorizar paginas web. Dashboard de testeo: 13659
 3) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores. Dashboard de testeo: 193
-El archivo **prometheus-config.yml** tiene una configuracion basica para tener el monitoreo local con los 3 modulos

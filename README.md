@@ -31,7 +31,9 @@ letsencrypt<br>
 
 Si no existen en el directorio (en mi caso /mnt/docker-data) va a dar error al levantar el docker
 
-**monitoreo.yml**
+**monitoreo.yml**<br>
+Se puede utilizar en la consola:<br>
+wget -O docker-compose.yml https://github.com/Mikiztly/docker/raw/main/compose/monitoreo.yml
 En este archivo esta configurado un stack donde funcionan prometheus + grafana, tambien estan incorporados 3 exportadores para prometheus:
 1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux. Dashboard de testeo: 1860
 2) blackbox-exporter: el agente para monitorizar paginas web. Dashboard de testeo: 13659
@@ -39,13 +41,14 @@ En este archivo esta configurado un stack donde funcionan prometheus + grafana, 
 
 **IMPORTANTE**
 Hay que crear tres carpetas:
-* prometheus/config -> en esta carpeta vamos a cargar los archivos de configuracion de prometheus
+* /prometheus/config -> en esta carpeta vamos a cargar los archivos de configuracion de prometheus
 * /prometheus/data -> en esta carpeta se guardan los datos de prometheus
 * /grafana-data -> en esta carpeta se guardan los datos de grafana
 
-Hay dos archivos de configuracion que van en la carpeta /etc/prometheus del docker:
-1) **prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, tambien consulta el otro archivo para obtener una lista de paginas web para monitorizar
+Hay tres archivos de configuracion en compose/monitoreo que van en la carpeta /etc/prometheus del docker:
+1) **prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, toma la lista de un archivo para obtener una lista de paginas web para monitorizar
 2) **blackbox-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo.
+3) **nodes-targets.yml** contiene una lista de paginas que se van a monitorizar
 
 **file-browser.yml**
 
