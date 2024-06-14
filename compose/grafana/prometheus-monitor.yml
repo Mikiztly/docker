@@ -1,8 +1,6 @@
 # COMPROBADO
 # Stack para habilitar el monitoreo en un servidor grafana ya funcionando
-# Al igual que otros stacks esta con la configurcion de IP fija
-# https://grafana.com/grafana/dashboards/893-main/
-# https://github.com/google/cadvisor
+# Al igual que otros stacks esta con la configurcion de IP definida
 
 version: '3.8'
 services:
@@ -47,6 +45,8 @@ services:
 
   # Este contenedor es el que va a monitoreear docker
   # https://prometheus.io/docs/guides/cadvisor/#docker-compose-configuration
+  # https://grafana.com/grafana/dashboards/893-main/
+  # https://github.com/google/cadvisor
   cadvisor:
     container_name: cadvisor
     image: gcr.io/cadvisor/cadvisor #google/cadvisor:latest
