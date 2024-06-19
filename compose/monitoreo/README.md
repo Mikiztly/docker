@@ -32,3 +32,7 @@ Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene t
 1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux. Dashboard de testeo: 11074
 2) blackbox-exporter: el agente para monitorizar paginas web. Dashboard de testeo: 13659
 3) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores. Dashboard de testeo: 193
+
+**Monitoreo Paginas Web.json**
+
+Dashboard para importar en Grafana que sirve para monitorizar paginas web, se hace un chequeo por URL, IP pública e IP privada. Tambien tiene información de la maquina donde se aloja la pagina
