@@ -1,6 +1,19 @@
-# Con esta configuracion carga el archivo nodes-targets.yml para obtener la lista de servidores que vamos a monitorizar
+  # Esta es la configuracion del archivo nodes-targets.yml para pasar la lista de servidores que vamos a monitorizar, en el archivo se pone una linea para monitorizar el servidor de la siguiente forma:
+  #
+  # <NODE_EXPORTER_IP_PORT>:_:<ESTADO>:_:<TARGET_URL>
+  #
+  # <NODE_EXPORTER_IP_PORT> -> aca va la IP/Direccion en donde corre el blackbox, osea la del servidor
+  # <ESTADO> -> Esto lo utilizo para agrupar LOS SERVIDORES, por ejemplo: Linux / Pruebas / Paginas
+  # <TARGET_URL> -> Es el nombre de la INSTANCIA para saber que servidor monitorea
 - targets:
+  # Pruebas
+
+  - 10.244.0.24:9100:_:Pruebas:_:terrallende.com.ar
+
   # En Produccion
 
-  # SRV-FS-OHIGGINS
-  - 10.243.0.229:9100
+  - 10.243.0.229:9100:_:Linux:_:SRV-FS-OHIGGINS
+  - 10.243.0.11:9100:_:Paginas:_:autogestion.workie.com.ar
+  - 10.243.0.181:9100:_:Paginas:_:nubicom.com.ar
+  - 10.243.0.6:9100:_:Paginas:_:strong.workie.com.ar
+  - 10.243.0.4:9100:_:Paginas:_:mail.workie.com.ar

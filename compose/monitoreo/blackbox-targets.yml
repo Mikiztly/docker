@@ -9,6 +9,13 @@
 # <TARGET_URL> -> Es el nombre de la INSTANCIA para saber que pagina se monitorea
 
 - targets:
+  # Pruebas
+
+  # Terrallende
+  - terrallende.com.ar:9115:_:http_2xx:_:Pruebas:_:URL:_:terrallende.com.ar
+  - 45.224.140.209:9115:_:icmp:_:Pruebas:_:Publica:_:terrallende.com.ar
+  - 10.244.0.24:9115:_:icmp:_:Pruebas:_:Privada:_:terrallende.com.ar
+
   # En Produccion
 
   # Workie Strong

@@ -24,11 +24,11 @@ Hay que crear dos carpetas:
 Hay tres archivos de configuracion que van en la carpeta /etc/prometheus del docker:
 1) **prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, toma la lista de un archivo para obtener una lista de paginas web para monitorizar
 2) **blackbox-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo.
-3) **nodes-targets.yml** contiene una lista de paginas que se van a monitorizar
+3) **nodes-targets.yml** contiene una lista de servidores que se van a monitorizar, se pueden agreagar con etiquetas
 
 **prometheus-monitor.yml**
 
 Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene tres contenedores:<br>
-1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux. Dashboard de testeo: 1860
+1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux. Dashboard de testeo: 11074
 2) blackbox-exporter: el agente para monitorizar paginas web. Dashboard de testeo: 13659
 3) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores. Dashboard de testeo: 193

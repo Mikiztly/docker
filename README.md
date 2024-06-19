@@ -27,7 +27,7 @@ Como le agregue el mapeo de volumenes a otro directorio, en el directorio config
 portainer-data<br>
 mariadb-data<br>
 npm-data<br>
-letsencrypt<br>
+letsencrypt<br> 
 
 Si no existen en el directorio (en mi caso /mnt/docker-data) va a dar error al levantar el docker
 
@@ -35,7 +35,7 @@ Si no existen en el directorio (en mi caso /mnt/docker-data) va a dar error al l
 Se puede utilizar en la consola:<br>
 wget -O docker-compose.yml https://github.com/Mikiztly/docker/raw/main/compose/monitoreo.yml
 En este archivo esta configurado un stack donde funcionan prometheus + grafana, tambien estan incorporados 3 exportadores para prometheus:
-1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux. Dashboard de testeo: 1860
+1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux. Dashboard de testeo: 11074
 2) blackbox-exporter: el agente para monitorizar paginas web. Dashboard de testeo: 13659
 3) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores. Dashboard de testeo: 193
 
@@ -46,15 +46,15 @@ Hay que crear tres carpetas:
 * /grafana-data -> en esta carpeta se guardan los datos de grafana
 
 Hay tres archivos de configuracion en compose/monitoreo que van en la carpeta /etc/prometheus del docker:
-1) **prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, toma la lista de un archivo para obtener una lista de paginas web para monitorizar
-2) **blackbox-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo.
-3) **nodes-targets.yml** contiene una lista de paginas que se van a monitorizar
+1) **monitoreo/prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, toma la lista de un archivo para obtener una lista de paginas web para monitorizar
+2) **monitoreo/blackbox-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo.
+3) **monitoreo/nodes-targets.yml** contiene una lista de servidores que se van a monitorizar, se pueden agreagar con etiquetas
 
 **file-browser.yml**
 
 Un explorador de archivos donde podemos ver borrar , subir, etc archivos desde el servidor. Muy util para evitar utilizar ssh o ftp
 
-**wordpress-mariadb.yml**
+**wordpress.yml**
 
 Popular motor de creacion de paginas web muy flexible y configurable, esta creado con portainer+npm+mariadb.yml funcionando.
 Por lo tanto se conecta a una red y un servidor DB existente, antes de levantar este dock crear las credenciales de la DB con phpmyadmin
