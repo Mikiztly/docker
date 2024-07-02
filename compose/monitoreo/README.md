@@ -37,4 +37,8 @@ Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene c
 
 **Monitoreo Paginas Web.json**
 
-Dashboard para importar en Grafana que sirve para monitorizar paginas web, se hace un chequeo por URL, IP pública e IP privada. Tambien tiene información de la maquina donde se aloja la pagina
+Dashboard para importar en Grafana que sirve para monitorizar paginas web, se hace un chequeo por URL, IP pública e IP privada. Tambien tiene información de la maquina donde se aloja la pagina.
+
+**Monitoreo Docker.json**
+
+Dashboard para importar en Grafana que sirve para monitorizar paginas web en docker, se hace un chequeo por URL, IP pública e IP privada. Tambien tiene información de la maquina donde se aloja docker.
