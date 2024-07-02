@@ -1,5 +1,6 @@
 # COMPROBADO
 # Conjunto de servidores que funcionan para hacer monitoreo de equipos
+# Creado por Mikiztly https://github.com/Mikiztly/docker/blob/main/compose/monitoreo/exporters.yml
 
 version: '3.8'
 
