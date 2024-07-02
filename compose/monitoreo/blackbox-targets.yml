@@ -1,34 +1,35 @@
 # Con esta configuracion carga el archivo blackbox-targets.yml para obtener la lista de sitios que vamos a monitorizar, en el archivo se pone una linea para monitorizar la pagina de la siguiente forma:
 #
-# <BLACKBOX_EXPORTER_IP_PORT>:_:<<MODULO>:_:<ESTADO>:_:<TIPO_IP>:_:<TARGET_URL>
+# <BLACKBOX_EXPORTER_IP_PORT>:_:<<MODULO>:_:<ESTADO>:_:<TIPO_IP>:_:<INSTANCIA>
 #
 # <BLACKBOX_EXPORTER_IP_PORT> -> aca va la IP/Direccion en donde corre el blackbox, si la pagina no lo tiene se debe poner la IP/Direccion de prometheus
 # <MODULO> -> Hay dos modulos: [http_2xx] para monitorizar la web y ssl / [icmp] para verificar por ping que la IP/Direccion este activa, sirve para ver IP publica y/o local
 # <ESTADO> -> Esto lo utilizo para agrupar las paginas, por ejemplo: Produccion / Pruebas / Desarrollo
 # <TIPO_IP> -> Otra etiqueta para saber que estoy monitorizando: URL - PUBLICA - PRIVADA
-# <TARGET_URL> -> Es el nombre de la INSTANCIA para saber que pagina se monitorea
+# <INSTANCIA> -> Es el nombre de la INSTANCIA para saber que pagina se monitorea
 
 - targets:
-  # Pruebas
+  # Docker
 
   # Terrallende
-  - terrallende.com.ar:9115:_:http_2xx:_:Pruebas:_:URL:_:terrallende.com.ar
-  - 45.224.140.209:9115:_:icmp:_:Pruebas:_:Publica:_:terrallende.com.ar
-  - 10.244.0.24:9115:_:icmp:_:Pruebas:_:Privada:_:terrallende.com.ar
+  - 45.24.40.09:9115:_:icmp:_:Docker:_:Publica:_:terrallende.com.ar
+  - 10.244.0.24:9115:_:icmp:_:Docker:_:Privada:_:terrallende.com.ar
+
+  # Pruebas
+
+  # SRV-calendar-merge
+  #- nubicom.com.ar:9115:_:http_2xx:_:WEBs:_:URL:_:nubicom.com.ar
+  - 50.22.41.50:9115:_:icmp:_:Calendario:_:Publica:_:SRV-calendar-merge
+  - 10.244.0.5:9115:_:icmp:_:Calendario:_:Privada:_:SRV-calendar-merge
+
+  # srv-zeta-nubicom
+  #- nubicom.com.ar:9115:_:http_2xx:_:WEBs:_:URL:_:nubicom.com.ar
+  #- 45.20.14.50:9115:_:icmp:_:Calendario:_:Publica:_:SRV-calendar-merge
+  - 10.243.0.10:9115:_:icmp:_:Zeta:_:Privada:_:SRV-ZETA-NUBICOM
 
   # En Produccion
 
-  # Workie Strong
-  - strong.workie.com.ar:9115:_:http_2xx:_:Produccion:_:URL:_:strong.workie.com.ar
-  - 45.224.140.44:9115:_:icmp:_:Produccion:_:Publica:_:strong.workie.com.ar
-  - 10.243.0.6:9115:_:icmp:_:Produccion:_:Privada:_:strong.workie.com.ar
-
-  # Workie NBC
-  - autogestion.workie.com.ar:9115:_:http_2xx:_:Produccion:_:URL:_:autogestion.workie.com.ar
-  - 45.224.140.51:9115:_:icmp:_:Produccion:_:Publica:_:autogestion.workie.com.ar
-  - 10.243.0.11:9115:_:icmp:_:Produccion:_:Privada:_:autogestion.workie.com.ar
-
   # Nubicom
-  - nubicom.com.ar:9115:_:http_2xx:_:Produccion:_:URL:_:nubicom.com.ar
-  - 45.224.140.192:9115:_:icmp:_:Produccion:_:Publica:_:nubicom.com.ar
-  - 10.243.0.181:9115:_:icmp:_:Produccion:_:Privada:_:nubicom.com.ar
+  - nubicom.com.ar:9115:_:http_2xx:_:WEBs:_:URL:_:nubicom.com.ar
+  - 50.24.91.12:9115:_:icmp:_:WEBs:_:Publica:_:nubicom.com.ar
+  - 10.243.0.181:9115:_:icmp:_:WEBs:_:Privada:_:nubicom.com.ar

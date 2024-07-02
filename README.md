@@ -1,7 +1,7 @@
 # docker
 Archivos de configuración para Docker Compose, en el directorio compose estan los ejemplos para utilizar con un solo nodo. En el directorio swarm estan los archivos configurados con un swarm de 3 workers, es la configuracion que voy a utilizar para hacer las pruebas
 
-Utilidades para manejar docker con un solo servidor:
+Utilidades para manejar docker con un solo servidor (Carpeta compose):
 
 **portainer.yml**
 
@@ -16,7 +16,7 @@ Se puede utilizar en la consola:<br>
 wget -O docker-compose.yml https://github.com/Mikiztly/docker/raw/main/compose/portainer+npm+mariadb.yml
 
 Cuatro servicios que se deben iniciar juntos para que funcionen bien: portainer + mariadb + phpmyadmin + nginx-proxy-manager. Estan configurados con IP estatica para poder conectarse con otros docks y por nombre de host, hay que tener cuidado con dos aspectos muy importantes:<br>
-    1) la declaracion de IP es estatica para poder incorporar mas servicios, para agregar un nuevo servicio se debe declarar la IP y configurar la lan como "external: true"<br>
+    1) la declaracion de IP es estatica para poder conectarse desde otros servicios, para agregar un nuevo servicio se debe declarar la IP y configurar la lan como "external: true"<br>
     2) Los puertos no se declaran ya que se manejan con el NPM (Nginx-Proxy-Manager)
 
 Nginx-Proxy-Manager<br>
@@ -34,10 +34,7 @@ Si no existen en el directorio (en mi caso /mnt/docker-data) va a dar error al l
 **monitoreo.yml**<br>
 Se puede utilizar en la consola:<br>
 wget -O docker-compose.yml https://github.com/Mikiztly/docker/raw/main/compose/monitoreo.yml
-En este archivo esta configurado un stack donde funcionan prometheus + grafana, tambien estan incorporados 3 exportadores para prometheus:
-1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux. Dashboard de testeo: 11074
-2) blackbox-exporter: el agente para monitorizar paginas web. Dashboard de testeo: 13659
-3) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores. Dashboard de testeo: 193
+En este archivo esta configurado un stack donde funcionan prometheus + grafana, los exportadores para prometheus estan en la carpeta compose/monitoreo
 
 **IMPORTANTE**
 Hay que crear tres carpetas:
@@ -45,10 +42,7 @@ Hay que crear tres carpetas:
 * /prometheus/data -> en esta carpeta se guardan los datos de prometheus
 * /grafana-data -> en esta carpeta se guardan los datos de grafana
 
-Hay tres archivos de configuracion en compose/monitoreo que van en la carpeta /etc/prometheus del docker:
-1) **monitoreo/prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, toma la lista de un archivo para obtener una lista de paginas web para monitorizar
-2) **monitoreo/blackbox-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo.
-3) **monitoreo/nodes-targets.yml** contiene una lista de servidores que se van a monitorizar, se pueden agreagar con etiquetas
+Hay archivos de configuracion en compose/monitoreo que van en la carpeta /etc/prometheus del docker para las distintas configuraciones de los monitores.
 
 **file-browser.yml**
 

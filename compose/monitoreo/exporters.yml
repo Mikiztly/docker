@@ -1,9 +1,14 @@
 # COMPROBADO
-# Stack para habilitar el monitoreo en un servidor grafana ya funcionando
-# Al igual que otros stacks esta con la configurcion de IP definida
+# Conjunto de servidores que funcionan para hacer monitoreo de equipos
 
 version: '3.8'
+
+# Le doy un nombre descriptivo al stack para saber de que se trata
+name: exporters
+
 services:
+  # Stack para habilitar el monitoreo en un servidor grafana ya funcionando
+  # Al igual que otros stacks esta con la configurcion de IP definida
   # Con esto vamos a obtener informacion de la maquina
   # https://github.com/prometheus/node_exporter
   # https://prometheus.io/docs/guides/node-exporter/
@@ -27,8 +32,9 @@ services:
     hostname: node-exporter
     networks:
       lan_docker:
+  # FIN node-exporter
 
-  # Con esto vamos a obtener informacion de la pagina web
+  # Con esto vamos a obtener informacion de la pagina web que no este en docker
   # https://github.com/prometheus/blackbox_exporter
   # https://github.com/prometheus-community/prometheus-playground/blob/master/blackbox-exporter/docker-compose.yml
   blackbox-exporter:
@@ -42,6 +48,7 @@ services:
     hostname: blackbox-exporter
     networks:
       lan_docker:
+  # FIN blackbox-exporter
 
   # Este contenedor es el que va a monitoreear docker
   # https://prometheus.io/docs/guides/cadvisor/#docker-compose-configuration
@@ -64,6 +71,22 @@ services:
     hostname: cadvisor
     networks:
       lan_docker:
+  # FIN cadvisor
+
+  # Este contenedor es el que va a monitoreear los certificados ssl de docker
+  # https://github.com/ribbybibby/ssl_exporter
+  # https://grafana.com/grafana/dashboards/11279-ssl-cerificates/
+  ssl-cert:
+    container_name: ssl-cert
+    image: ribbybibby/ssl-exporter
+    restart: unless-stopped
+    ports:
+      - '9219:9219'
+    # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
+    hostname: ssl-cert
+    networks:
+      lan_docker:
+  # FIN ssl-cert
 
 # Declaramos la red que vamos a utilizar
 networks:

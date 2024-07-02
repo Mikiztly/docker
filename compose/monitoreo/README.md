@@ -21,17 +21,19 @@ Hay que crear dos carpetas:
 * /prometheus/config -> en esta carpeta vamos a cargar los archivos de configuracion de prometheus
 * /prometheus/data -> en esta carpeta se guardan los datos de prometheus
 
-Hay tres archivos de configuracion que van en la carpeta /etc/prometheus del docker:
-1) **prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, toma la lista de un archivo para obtener una lista de paginas web para monitorizar
-2) **blackbox-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo.
-3) **nodes-targets.yml** contiene una lista de servidores que se van a monitorizar, se pueden agreagar con etiquetas
+Hay cuatro archivos de configuracion que van en la carpeta /etc/prometheus del docker:
+1) **prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, toma la lista de un archivo para obtener una lista de paginas web para monitorizar, Hay que renombrarlo como **prometheus.yml**
+2) **blackbox-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo. Podemos monitorizar la URL, IP publica e IP privada.
+3) **nodes-targets.yml** contiene una lista de servidores que se van a monitorizar, se pueden agreagar con etiquetas. Aca ponemos los servidores con node-exporter y para las maquinas que tienen docker ponemos la direccion con el puerto 8080 para ver los datos de cadvisor.
+4) **ssl-docker-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo. Podemos monitorizar la URL, IP publica e IP privada.
 
-**prometheus-monitor.yml**
+**exporters.yml**
 
-Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene tres contenedores:<br>
+Stack para habilitar el monitoreo en un servidor grafana ya funcionando, tiene cuatro contenedores:<br>
 1) node-exporter: el agente de prometheus que permite monitorizar los recursos de linux. Dashboard de testeo: 11074
-2) blackbox-exporter: el agente para monitorizar paginas web. Dashboard de testeo: 13659
+2) blackbox-exporter: el agente para monitorizar paginas web sin docker. Dashboard de testeo: 13659
 3) cadvisor: un agente de codigo libre perteneciente a google que sirve para monitorizar contenedores. Dashboard de testeo: 193
+4) ssl-cert: el agente para monitorizar paginas web de docker. Dashboard de testeo: 11279
 
 **Monitoreo Paginas Web.json**
 
