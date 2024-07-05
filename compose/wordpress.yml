@@ -20,7 +20,7 @@ services:
     # ports:
       # - 80:80
     volumes:
-      - ./wordpress-data:/var/www/html # /wp-content
+      - wordpress-data:/var/www/html # /wp-content
     # Configuramos una IP estatica para el dock en la red portainer
     hostname: wordpress
     networks:
@@ -29,6 +29,18 @@ services:
 networks:
   lan_docker:
     external: true
+
+# Como hago uso de los volumenes aca hago las declaraciones
+# Es muy importante que los directorios existan para que el stack funcione
+volumes:
+  # Volumen ara guardar los datos de Portainer
+  wordpress-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/wordpress-data
+      o: bind
+    name: wordpress-data
 
 # Como ya tengo DB comento para dejar la configuracion original
 #  db:

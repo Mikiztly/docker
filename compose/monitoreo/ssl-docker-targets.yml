@@ -1,6 +1,6 @@
 # Con esta configuracion carga el archivo ssl-docker-targets.yml para obtener la lista de sitios en docker que vamos a monitorizar, en el archivo se pone una linea para monitorizar el servidor de la siguiente forma:
 #
-# <SSL_EXPORTER_IP_PORT>:_:<ESTADO>:_:<TIPO_IP>:_:<INSTANCIA>
+# <SSL_EXPORTER_IP_PORT>:_:<ESTADO>:_:<DIRECCION>:_:<INSTANCIA>
 #
 # <SSL_EXPORTER_IP_PORT> -> aca va la IP/Direccion en donde corre el ssl-cert, si la pagina no lo tiene se debe poner la IP/Direccion de prometheus
 # <ESTADO> -> Esto lo utilizo para agrupar las paginas, por ejemplo: Produccion / Pruebas / Desarrollo
@@ -17,4 +17,4 @@
 
   # En Produccion
 
-  # - ssl-cert:9219:_:Monitor:_:grafana.strong.local:_:grafana.strong.local
+  - ssl-cert:9219:_:Monitor:_:grafana.strong.local:_:grafana.strong.local

@@ -35,7 +35,7 @@ services:
       lan_docker:
   # FIN node-exporter
 
-  # Con esto vamos a obtener informacion de la pagina web que no este en docker
+  # Con esto vamos a obtener informacion de la pagina web que no este en docker o pas IP publica y privada
   # https://github.com/prometheus/blackbox_exporter
   # https://github.com/prometheus-community/prometheus-playground/blob/master/blackbox-exporter/docker-compose.yml
   blackbox-exporter:
