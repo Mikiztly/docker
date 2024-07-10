@@ -22,11 +22,12 @@ Hay que crear dos carpetas:
 * /prometheus/config -> en esta carpeta vamos a cargar los archivos de configuracion de prometheus
 * /prometheus/data -> en esta carpeta se guardan los datos de prometheus
 
-Hay cuatro archivos de configuracion que van en la carpeta /etc/prometheus del docker:
+Hay cinco archivos de configuracion que van en la carpeta /etc/prometheus del docker:
 1) **prometheus-config.yml** esta con una configuracion personalizada con una configuracion basica para tener el monitoreo local con los 3 modulos, toma la lista de un archivo para obtener una lista de paginas web para monitorizar, Hay que renombrarlo como **prometheus.yml**
 2) **blackbox-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo. Podemos monitorizar la URL, IP publica e IP privada.
 3) **nodes-targets.yml** contiene una lista de servidores que se van a monitorizar, se pueden agreagar con etiquetas. Aca ponemos los servidores con node-exporter y para las maquinas que tienen docker ponemos la direccion con el puerto 8080 para ver los datos de cadvisor.
-4) **ssl-docker-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo. Podemos monitorizar la URL, IP publica e IP privada.
+4) **ssl-docker-targets.yml** contiene una lista de paginas que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo. Tenemos que monitorizar la URL, IP publica e IP privada se monitorizan con otro archivo.
+5) **ping-targets.yml** contiene una lista de IP publicas y privadas de los servidores docker que se van a monitorizar, se pueden agreagar con etiquetas como el estado y el tipo de IP utilizada para el monitoreo. Se utiliza blackbox para hacer los pings.
 
 **exporters.yml**
 

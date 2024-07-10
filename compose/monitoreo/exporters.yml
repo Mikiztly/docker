@@ -89,6 +89,22 @@ services:
       lan_docker:
   # FIN ssl-cert
 
+  # Este contenedor es el que va a monitoreear por snmp, no lo probe todavia
+  # https://github.com/prometheus/snmp_exporter
+  # https://gist.github.com/ssplatt/90adad25e8a18c58e749a8475f8f5a83
+  # https://grafana.com/grafana/dashboards/
+  snmp-exporter:
+    container_name: snmp-exporter
+    image: prom/snmp-exporter
+    restart: unless-stopped
+    ports:
+      - '9116:9116'
+    # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
+    hostname: snmp-exporter
+    networks:
+      lan_docker:
+  # FIN snmp-exporter
+
 # Declaramos la red que vamos a utilizar
 networks:
   # Configuracion de la red lan_docker

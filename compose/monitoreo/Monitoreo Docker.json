@@ -198,7 +198,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "11.0.0"
+      "version": "11.0.1"
     },
     {
       "type": "datasource",
@@ -305,7 +305,7 @@
         "textMode": "value",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.0.1",
       "targets": [
         {
           "datasource": {
@@ -335,6 +335,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -537,7 +538,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.0.1",
       "targets": [
         {
           "datasource": {
@@ -616,7 +617,7 @@
           "useBackend": false
         }
       ],
-      "title": "Panel Title",
+      "title": "Estado Paginas WEB",
       "transformations": [
         {
           "id": "joinByField",
@@ -724,7 +725,7 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.0.1",
       "targets": [
         {
           "datasource": {
@@ -905,7 +906,7 @@
         "textMode": "name",
         "wideLayout": true
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.0.1",
       "targets": [
         {
           "datasource": {
@@ -934,7 +935,7 @@
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "probe_success{instance=~\"$instance\", geohash=\"Publica\"}",
+          "expr": "probe_success{instance=~\"$instance\", job=\"Publica\"}",
           "format": "table",
           "fullMetaSearch": false,
           "hide": false,
@@ -953,7 +954,7 @@
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "probe_success{instance=~\"$instance\", geohash=\"Privada\"}",
+          "expr": "probe_success{instance=~\"$instance\", job=\"Privada\"}",
           "format": "table",
           "fullMetaSearch": false,
           "hide": false,
@@ -1060,7 +1061,7 @@
               }
             ]
           },
-          "unit": "percentunit"
+          "unit": "percent"
         },
         "overrides": []
       },
@@ -1077,7 +1078,7 @@
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
-            "mean"
+            "lastNotNull"
           ],
           "fields": "",
           "values": false
@@ -1086,7 +1087,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.0.1",
       "targets": [
         {
           "datasource": {
@@ -1095,10 +1096,24 @@
           },
           "editorMode": "code",
           "expr": "1 - node_memory_MemFree_bytes{instance=~\"$instance\"} / node_memory_MemTotal_bytes{instance=~\"$instance\"}",
+          "hide": true,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "code",
+          "expr": "((node_memory_MemTotal_bytes{instance=~\"$instance\"} - node_memory_MemAvailable_bytes{instance=~\"$instance\"}) / node_memory_MemTotal_bytes{instance=~\"$instance\"}) * 100",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "",
+          "range": true,
+          "refId": "B"
         }
       ],
       "title": "Uso de RAM",
@@ -1154,7 +1169,7 @@
         "showThresholdMarkers": true,
         "sizing": "auto"
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.0.1",
       "targets": [
         {
           "datasource": {
@@ -1163,7 +1178,7 @@
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "rate(process_cpu_seconds_total{instance=\"$instance\", job=~\"$job\"}[$__interval]) * 100",
+          "expr": "(1 - avg(rate(node_cpu_seconds_total{instance=~\"$instance\", mode=\"idle\"}[1m])) by (instance))*100",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
           "instant": false,
@@ -1442,7 +1457,7 @@
           }
         ]
       },
-      "pluginVersion": "11.0.0",
+      "pluginVersion": "11.0.1",
       "targets": [
         {
           "datasource": {
@@ -2747,6 +2762,6 @@
   "timezone": "browser",
   "title": "Monitoreo Docker",
   "uid": "fdprwi9sy7jeob",
-  "version": 89,
+  "version": 94,
   "weekStart": ""
 }

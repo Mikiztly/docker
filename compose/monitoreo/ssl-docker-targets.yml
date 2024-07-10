@@ -17,4 +17,8 @@
 
   # En Produccion
 
-  - ssl-cert:9219:_:Monitor:_:grafana.strong.local:_:grafana.strong.local
+  - strongsystems.com.ar:9219:_:Produccion:_:strongsystems.com.ar:_:Paginas-WEB
+  - idsseguridad.com.ar:9219:_:Produccion:_:idsseguridad.com.ar:_:Paginas-WEB
+  - comercialacser.com.ar:9219:_:Produccion:_:comercialacser.com.ar:_:Paginas-WEB
+  - workie.com.ar:9219:_:Produccion:_:workie.com.ar:_:Paginas-WEB
+  - calendario.nubicom.com.ar:9219:_:Produccion:_:calendario.nubicom.com.ar:_:Paginas-WEB

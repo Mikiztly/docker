@@ -9,22 +9,13 @@
 # <INSTANCIA> -> Es el nombre de la INSTANCIA para saber que pagina se monitorea
 
 - targets:
-  # Docker
-
-  # Terrallende
-  - 45.24.40.09:9115:_:icmp:_:Docker:_:Publica:_:terrallende.com.ar
-  - 10.244.0.24:9115:_:icmp:_:Docker:_:Privada:_:terrallende.com.ar
-
   # Pruebas
 
   # SRV-calendar-merge
-  #- nubicom.com.ar:9115:_:http_2xx:_:WEBs:_:URL:_:nubicom.com.ar
   - 50.22.41.50:9115:_:icmp:_:Calendario:_:Publica:_:SRV-calendar-merge
   - 10.244.0.5:9115:_:icmp:_:Calendario:_:Privada:_:SRV-calendar-merge
 
   # srv-zeta-nubicom
-  #- nubicom.com.ar:9115:_:http_2xx:_:WEBs:_:URL:_:nubicom.com.ar
-  #- 45.20.14.50:9115:_:icmp:_:Calendario:_:Publica:_:SRV-calendar-merge
   - 10.243.0.10:9115:_:icmp:_:Zeta:_:Privada:_:SRV-ZETA-NUBICOM
 
   # En Produccion

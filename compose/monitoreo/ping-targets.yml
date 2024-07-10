@@ -1,0 +1,20 @@
+# Con esta configuracion carga el archivo ping-targets.yml para obtener la lista de IP que vamos a monitorizar, en el archivo se pone una linea para monitorizar la pagina de la siguiente forma:
+#
+# <BLACKBOX_EXPORTER_IP_PORT>:_:<MODULO>:_:<ESTADO>:_:<TIPO_IP>:_:<INSTANCIA>
+#
+# <BLACKBOX_EXPORTER_IP_PORT> -> aca va la IP/Direccion en donde corre el blackbox, si la pagina no lo tiene se debe poner la IP/Direccion de prometheus
+# <MODULO> -> Hay dos modulos: [http_2xx] para monitorizar la web y ssl / [icmp] para verificar por ping que la IP/Direccion este activa, sirve para ver IP publica y/o local
+# <ESTADO> -> Etiqueta para saber que estoy monitorizando: PUBLICA - PRIVADA
+# <TIPO_IP> -> Aca pongo la IP que quiero monitorizar 
+# <INSTANCIA> -> Es el nombre de la INSTANCIA para saber que pagina se monitorea
+# Esta configuracion es pareceida a blackbox pero solo hay que usarla para monitorizar la IP publico y/o privada de paginas dentro de docker
+
+- targets:
+  # Pruebas
+
+  - 45.224.140.209:9115:_:icmp:_:Publica:_:45.224.140.209:_:terrallende.com.ar
+  - 10.244.0.24:9115:_:icmp:_:Privada:_:10.244.0.24:_:terrallende.com.ar
+
+  # Paginas web Docker
+  - 45.224.140.190:9115:_:icmp:_:Publica:_:45.224.140.190:_:Paginas-WEB
+  - 10.244.0.10:9115:_:icmp:_:Privada:_:10.244.0.10:_:Paginas-WEB
