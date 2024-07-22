@@ -1,4 +1,4 @@
-# COMPROBADO
+# 
 # Un explorador de archivos donde podemos ver editar , subir, etc archivos desde el servidor. Muy
 # util para evitar utilizar ssh o ftp
 
@@ -17,6 +17,8 @@ services:
     # ports:
       # - "8080:80"
     restart: always
+    # Le activo la terminal
+    tty: true
     # Configuracion de discos
     volumes:
       - /mnt/docker-data:/srv
