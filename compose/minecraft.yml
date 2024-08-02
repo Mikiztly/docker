@@ -1,0 +1,64 @@
+# https://github.com/itzg/docker-minecraft-server/blob/master/examples/docker-compose-rlcraft.yml
+# https://docker-minecraft-server.readthedocs.io/en/latest/versions/java/
+
+# Le doy un nombre descriptivo para saber que es en portainer
+name: minecraft
+services:
+  mc:
+    # Confiuracion del dock
+    container_name: minecraft
+    image: itzg/minecraft-server:java17
+    volumes:
+    - minecraft-data:/data
+    - minecraft-modpacks:/modpacks:ro
+    environment:
+      ONLINE_MODE: "false"
+      EULA: "true"
+      TYPE: "MODRINTH"
+      VERSION: "1.20.1"
+      FORGE_VERSION: "47.2.32"
+      OVERRIDE_SERVER_PROPERTIES: "true"
+      DIFFICULTY: "easy"
+      MAX_TICK_TIME: "-1"
+      ALLOW_FLIGHT: "true"
+      ENABLE_COMMAND_BLOCK: "true"
+      VIEW_DISTANCE: "10"
+      MODRINTH_MODPACK:
+        https://modrinth.com/modpack/better-mc-forge-bmc4
+      # MEMORY: "4G"
+      # Download from https://www.curseforge.com/minecraft/modpacks/rlcraft and place in modpacks subdir
+      # GENERIC_PACK: "/modpacks/RLCraft+Server+Pack+1.12.2+-+Release+v2.9.1c.zip"
+    ports:
+      - 25565:25565
+
+    # Le doy un nombre al stack para referirlo con NPM y le damos la red correspondiente
+    hostname: minecraft
+    networks:
+      lan_docker:
+  # FIN minecraft
+
+# Declaramos la red que vamos a utilizar
+networks:
+  # Configuracion de la red lan_docker
+  lan_docker:
+    external: true
+
+# Como hago uso de los volumenes aca hago las declaraciones
+# Es muy importante que los directorios existan para que el stack funcione
+volumes:
+  # Volumen ara guardar los datos de minecraft
+  minecraft-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/minecraft/data
+      o: bind
+    name: minecraft-data
+  # Volumen ara guardar los modpacks de minecraft
+  minecraft-modpacks:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /mnt/docker-data/minecraft/modpacks
+      o: bind
+    name: minecraft-modpacks
