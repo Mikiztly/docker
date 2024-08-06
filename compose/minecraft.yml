@@ -1,3 +1,4 @@
+# Falta comprobar que funcionen bien los mods
 # https://github.com/itzg/docker-minecraft-server/blob/master/examples/docker-compose-rlcraft.yml
 # https://docker-minecraft-server.readthedocs.io/en/latest/versions/java/
 
@@ -14,20 +15,21 @@ services:
     environment:
       ONLINE_MODE: "false"
       EULA: "true"
-      TYPE: "MODRINTH"
+      SERVER_NAME: "Terrallende"
+      TYPE: "FORGE"
       VERSION: "1.20.1"
       FORGE_VERSION: "47.2.32"
       OVERRIDE_SERVER_PROPERTIES: "true"
       DIFFICULTY: "easy"
+      MODE: "creative"
+      SNOOPER_ENABLED: "false"
+      MAX_PLAYERS: "5"
       MAX_TICK_TIME: "-1"
       ALLOW_FLIGHT: "true"
       ENABLE_COMMAND_BLOCK: "true"
-      VIEW_DISTANCE: "10"
-      MODRINTH_MODPACK:
-        https://modrinth.com/modpack/better-mc-forge-bmc4
-      # MEMORY: "4G"
-      # Download from https://www.curseforge.com/minecraft/modpacks/rlcraft and place in modpacks subdir
-      # GENERIC_PACK: "/modpacks/RLCraft+Server+Pack+1.12.2+-+Release+v2.9.1c.zip"
+      # VIEW_DISTANCE: "10"
+      # https://www.curseforge.com/minecraft/modpacks/better-mc-forge-bmc4
+      GENERIC_PACK: "/modpacks/Better_MC_[FORGE]_1.20.1_v28.zip"
     ports:
       - 25565:25565
 
