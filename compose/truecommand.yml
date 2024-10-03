@@ -1,3 +1,5 @@
+# https://www.truenas.com/truecommand/
+# Es para manejar varios servidores TrueNAS
 version: '3.4'
 
 services:

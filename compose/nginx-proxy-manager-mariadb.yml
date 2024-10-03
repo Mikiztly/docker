@@ -22,12 +22,6 @@ services:
       # Add any other Stream port you want to expose
       # - '21:21' # FTP
     environment:
-      # Coneccion a la base de datos, dejo lo originales
-      # DB_MYSQL_HOST: "db"
-      # DB_MYSQL_PORT: 3306
-      # DB_MYSQL_USER: "npm"
-      # DB_MYSQL_PASSWORD: "npm"
-      # DB_MYSQL_NAME: "npm"
       # Esta configuracion es para conectarse a una DB que se hizo en otro dock,
       # se deben crear las credenciales en el servidor
       DB_MYSQL_HOST: "mariadb"
@@ -45,12 +39,12 @@ services:
       - mariadb
     # Configuramos una IP estatica para el dock
     networks:
-      dcasavilla_lan_cloud:
+      lan_cloud:
         ipv4_address: 192.168.200.5
     hostname: mariadb
 # Declaramos la red que vamos a utilizar, es una red ya creada en otro dock
 networks:
-  dcasavilla_lan_cloud:
+  lan_cloud:
     external: true
   
   # Dejo la configuracion original
