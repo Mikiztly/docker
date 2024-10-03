@@ -1,23 +1,6 @@
 # Lo saque del servidor de sitios de Strong
-version: '3.9'
 
 services:
-  db:
-    image: 'mariadb:latest'
-    container_name: '${CON_DB_NAME}'
-    ports:
-      - '${MYSQL_PORT}:${MYSQL_PORT}'
-    restart: 'always'
-    environment:
-      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
-      MYSQL_DATABASE: '${MYSQL_DATABASE}'
-      MYSQL_USER: '${MYSQL_USER}'
-      MYSQL_PASSWORD: '${MYSQL_DB_PASSWORD}'
-      MYSQL_TCP_PORT: '${MYSQL_PORT}'
-    volumes:
-      - '/contenedores/wp-sites/${DOMAIN}/mysql-data/db_data:/var/lib/mysql'
-      - '/contenedores/wp-sites/${DOMAIN}/mysql-conf.d:/etc/mysql/conf.d'
-
   wordpress:
     depends_on:
       - 'db'
@@ -35,3 +18,19 @@ services:
       - '/contenedores/wp-sites/${DOMAIN}/wp-content:/var/www/html'
       - '/contenedores/wp-sites/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini'
       
+  db:
+    image: 'mariadb:latest'
+    container_name: '${CON_DB_NAME}'
+    ports:
+      - '${MYSQL_PORT}:${MYSQL_PORT}'
+    restart: 'always'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${MYSQL_ROOT_PASSWORD}'
+      MYSQL_DATABASE: '${MYSQL_DATABASE}'
+      MYSQL_USER: '${MYSQL_USER}'
+      MYSQL_PASSWORD: '${MYSQL_DB_PASSWORD}'
+      MYSQL_TCP_PORT: '${MYSQL_PORT}'
+    volumes:
+      - '/contenedores/wp-sites/${DOMAIN}/mysql-data/db_data:/var/lib/mysql'
+      - '/contenedores/wp-sites/${DOMAIN}/mysql-conf.d:/etc/mysql/conf.d'
+
