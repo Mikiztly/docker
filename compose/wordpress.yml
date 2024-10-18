@@ -39,18 +39,6 @@ volumes:
       o: bind
     name: wordpress-data
 
-# Como hago uso de los volumenes aca hago las declaraciones
-# Es muy importante que los directorios existan para que el stack funcione
-volumes:
-  # Volumen ara guardar los datos de Portainer
-  wordpress-data:
-    driver: local # Define the driver and options under the volume name
-    driver_opts:
-      type: none
-      device: ${DOCKER_PATH}/$(WP_DOMAIN)
-      o: bind
-    name: wordpress-data
-
 # Como ya tengo DB comento para dejar la configuracion original
 #  db:
 #    container_name: servidor_mysql
