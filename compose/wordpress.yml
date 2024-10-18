@@ -4,18 +4,16 @@
 # + phpmyadmin + nginx-proxy-manager, por lo que el servidor mariadb ya esta creado
 # primero tenemos que crear las credenciales con phpmyadmin
 
-version: '3.8'
-
 services:
   wordpress:
-    container_name: wordpress
+    container_name: $(WP_NAME)
     image: wordpress
     restart: always
     environment:
-      WORDPRESS_DB_HOST: mariadb
-      WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress
-      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_HOST: $(WP_DB_HOST)
+      WORDPRESS_DB_USER: $(WP_USER)
+      WORDPRESS_DB_PASSWORD: $(WP_PASS)
+      WORDPRESS_DB_NAME: $(WP_DB_NAME)
     # Como esta configurado con otra red no se le mapean los puertos
     # ports:
       # - 80:80
@@ -24,10 +22,10 @@ services:
     # Configuramos una IP estatica para el dock en la red portainer
     hostname: wordpress
     networks:
-      lan_docker:
+      lan-docker:
 
 networks:
-  lan_docker:
+  lan-docker:
     external: true
 
 # Como hago uso de los volumenes aca hago las declaraciones
@@ -38,7 +36,7 @@ volumes:
     driver: local # Define the driver and options under the volume name
     driver_opts:
       type: none
-      device: /mnt/docker-data/wordpress-data
+      device: ${DOCKER_PATH}/$(WP_DOMAIN)
       o: bind
     name: wordpress-data
 
