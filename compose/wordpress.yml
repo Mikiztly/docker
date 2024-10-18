@@ -5,14 +5,14 @@
 
 services:
   wordpress:
-    container_name: '$(CON_WP_NAME)'
     image: wordpress
+    container_name: ${CON_WP_NAME}
     restart: always
     environment:
-      WORDPRESS_DB_HOST: '$(WP_DB_HOST)'
-      WORDPRESS_DB_USER: '$(WP_USER)'
-      WORDPRESS_DB_PASSWORD: '$(WP_PASS)'
-      WORDPRESS_DB_NAME: '$(WP_DB_NAME)'
+      WORDPRESS_DB_HOST: ${WP_DB_HOST}
+      WORDPRESS_DB_USER: ${WP_USER}
+      WORDPRESS_DB_PASSWORD: ${WP_PASS}
+      WORDPRESS_DB_NAME: ${WP_DB_NAME}
     # Como esta configurado con otra red no se le mapean los puertos
     # ports:
       # - 80:80
@@ -26,6 +26,18 @@ services:
 networks:
   lan-docker:
     external: true
+
+# Como hago uso de los volumenes aca hago las declaraciones
+# Es muy importante que los directorios existan para que el stack funcione
+volumes:
+  # Volumen ara guardar los datos de Portainer
+  wordpress-data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: ${DOCKER_PATH}/${WP_DOMAIN}
+      o: bind
+    name: wordpress-data
 
 # Como hago uso de los volumenes aca hago las declaraciones
 # Es muy importante que los directorios existan para que el stack funcione
