@@ -9,7 +9,7 @@ services:
     container_name: ${CON_WP_NAME}
     restart: always
     environment:
-      WORDPRESS_DB_HOST: ${WP_DB_HOST}
+      WORDPRESS_DB_HOST: ${WP_DB_HOST}:3306
       WORDPRESS_DB_USER: ${WP_USER}
       WORDPRESS_DB_PASSWORD: ${WP_PASS}
       WORDPRESS_DB_NAME: ${WP_DB_NAME}
