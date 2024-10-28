@@ -9,7 +9,7 @@ services:
     container_name: ${CON_WP_NAME}
     restart: always
     environment:
-      WORDPRESS_DB_HOST: ${WP_DB_HOST}:3306
+      WORDPRESS_DB_HOST: ${WP_DB_HOST}
       WORDPRESS_DB_USER: ${WP_USER}
       WORDPRESS_DB_PASSWORD: ${WP_PASS}
       WORDPRESS_DB_NAME: ${WP_DB_NAME}
@@ -19,9 +19,26 @@ services:
     volumes:
       - wordpress-data:/var/www/html # /wp-content
     # Configuramos una IP estatica para el dock en la red portainer
-    hostname: wordpress
+    hostname: ${CON_WP_NAME}
     networks:
       lan-docker:
+
+# Como ya tengo DB comento para dejar la configuracion original
+#  db:
+#    container_name: ${WP_DB_HOST}
+#    image: mariadb
+#    restart: always
+#    environment:
+#      MYSQL_DATABASE: ${WP_DB_NAME}
+#      MYSQL_USER: ${WP_USER}
+#      MYSQL_PASSWORD: ${WP_PASS}
+#      MYSQL_ROOT_PASSWORD: ${WP_PASS}
+#    volumes:
+#      - mariadb-data:/var/lib/mysql
+    # Configuramos una IP estatica para el dock en la red portainer
+#    hostname: ${WP_DB_HOST}
+#    networks:
+#      lan-docker:
 
 networks:
   lan-docker:
@@ -30,27 +47,19 @@ networks:
 # Como hago uso de los volumenes aca hago las declaraciones
 # Es muy importante que los directorios existan para que el stack funcione
 volumes:
-  # Volumen ara guardar los datos de Portainer
+  # Volumen ara guardar los datos de wordpress
   wordpress-data:
     driver: local # Define the driver and options under the volume name
     driver_opts:
       type: none
-      device: ${DOCKER_PATH}/${WP_DOMAIN}
+      device: ${DOCKER_PATH}/${WP_DOMAIN}/wp
       o: bind
     name: wordpress-data
-
-# Como ya tengo DB comento para dejar la configuracion original
-#  db:
-#    container_name: servidor_mysql
-#    image: mariadb
-#    restart: always
-#    environment:
-#      MYSQL_DATABASE: bd_wp
-#      MYSQL_USER: user_wp
-#      MYSQL_PASSWORD: asdasd
-#      MYSQL_ROOT_PASSWORD: asdasd
-#    volumes:
-#      - mariadb_data:/var/lib/mysql
-#volumes:
-#    wordpress_data:
-#    mariadb_data:
+  # Volumen ara guardar los datos de mariadb
+#  mariadb-data:
+#    driver: local # Define the driver and options under the volume name
+#    driver_opts:
+#      type: none
+#      device: ${DOCKER_PATH}/${WP_DOMAIN}/mariadb
+#      o: bind
+#    name: mariadb-data
